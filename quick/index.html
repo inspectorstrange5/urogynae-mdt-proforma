@@ -214,8 +214,6 @@ footer{max-width:1200px;margin:0 auto;padding:4px 16px 40px;color:var(--muted);f
   <div class="chips" data-req-group="proc">
     <label><input type="checkbox" name="proc" value="colpo">Colposuspension</label>
     <label><input type="checkbox" name="proc" value="afs">Fascial sling</label>
-    <label><input type="checkbox" name="proc" value="rmus">Retropubic MUS</label>
-    <label><input type="checkbox" name="proc" value="tot">Transobturator MUS</label>
     <label><input type="checkbox" name="proc" value="bulk">Bulking agent</label>
   </div>
   <div class="grp">OAB</div>
@@ -234,7 +232,6 @@ footer{max-width:1200px;margin:0 auto;padding:4px 16px 40px;color:var(--muted);f
     <label><input type="checkbox" name="proc" value="shp">Sacrohysteropexy</label>
     <label><input type="checkbox" name="proc" value="scp">Sacrocolpopexy</label>
     <label><input type="checkbox" name="proc" value="colpocleisis">Colpocleisis</label>
-    <label><input type="checkbox" name="proc" value="tvm">Transvaginal mesh</label>
   </div>
   <div class="grp">Other</div>
   <div class="chips">
@@ -242,7 +239,7 @@ footer{max-width:1200px;margin:0 auto;padding:4px 16px 40px;color:var(--muted);f
     <label><input type="checkbox" name="proc" value="nonsurg">Non-surgical / advice</label>
     <label><input type="checkbox" name="proc" value="invest">Further investigation</label>
   </div>
-  <div class="row"><div class="f wide"><label for="plan">Plan / notes<span data-if="tot"> (include why retropubic route should be avoided)</span></label><input type="text" id="plan" name="plan"></div></div>
+  <div class="row"><div class="f wide"><label for="plan">Plan / notes</label><input type="text" id="plan" name="plan"></div></div>
 </section>
 
 <section class="card" data-if="invasive">
@@ -294,9 +291,9 @@ const v = n => vals(n)[0] || '';
 const has = (n, x) => vals(n).includes(x);
 const any = (n, xs) => xs.some(x => has(n, x));
 
-const SUI_P = ['colpo','afs','rmus','tot','bulk'], OAB_P = ['botox','ptns','sns'];
-const POP_P = ['ant','post','vh','ssf','manchester','shp','scp','colpocleisis','tvm'];
-const MESH_P = ['rmus','tot','shp','scp','tvm'];
+const SUI_P = ['colpo','afs','bulk'], OAB_P = ['botox','ptns','sns'];
+const POP_P = ['ant','post','vh','ssf','manchester','shp','scp','colpocleisis'];
+const MESH_P = ['shp','scp'];
 
 function derive(){
   const d = {};
@@ -318,7 +315,6 @@ function derive(){
   if (d.suiS && has('prev','sui')) d.reg.push('repeat continence surgery');
   if (d.popS && has('prev','samesite')) d.reg.push('repeat same-site prolapse surgery');
   if (has('dx','bowel')) d.reg.push('bowel problem needing colorectal input');
-  if (has('proc','tvm')) d.reg.push('vaginal mesh for prolapse');
   if (has('dx','mesh') || has('proc','meshrem')) d.reg.push('mesh complication');
   if (d.invasive && has('bg','fertility')) d.reg.push('surgery with future childbearing wish');
   return d;
@@ -329,7 +325,6 @@ const IF = {
   pvr: d => has('dx','voiding') || has('dx','ruti'),
   invasive: d => d.invasive, pda: d => d.suiS || d.popS, meshp: d => d.meshP,
   botox: () => has('proc','botox'), reg: d => d.suiS || d.popS || has('dx','mesh'),
-  tot: () => has('proc','tot'),
 };
 
 const R = (ref, t, ok, msg, level) => ({ref, t, st: ok ? 'pass' : (level || 'fail'), msg: ok ? '' : msg});
@@ -359,7 +354,6 @@ function rules(d){
   P(IF.pda(d), R('1.5.1 / 1.8.2', 'NICE decision aid', has('cs','pda'), 'Not used'));
   P(d.invasive, R('1.5.1', 'All options discussed', has('cs','options'), 'Not recorded'));
   P(d.meshP, R('1.5.7 / 1.8.6', 'Mesh / implant counselling', has('cs','mesh'), 'Not recorded'));
-  P(has('proc','tot'), R('1.5.10', 'Transobturator justified', /retropubic|avoid|previous/i.test(v('plan')), 'Give reason in plan', 'warn'));
   P(has('proc','botox'), R('1.4.46', 'CISC counselling', has('cs','cisc'), 'Not recorded'));
   P(IF.reg(d), R('1.2.1', 'Registry consent', has('cs','registry'), 'Not asked'));
   P(has('proc','ptns'), R('1.4.15', 'PTNS criteria', any('tx', ['med1','med2']), 'Medicines must fail; woman declines botox/SNS', any('tx',['med1','med2']) ? 'warn' : 'fail'));
@@ -397,7 +391,7 @@ const L = {
   comp:{ant:'anterior', api:'apical', post:'posterior'},
   wu:{diary:'diary ≥3d', dip:'dipstick', pvr:'PVR', pfa:'PF assessment', quest:'questionnaire', popq:'POP-Q', demo:'SUI demonstrated', mass:'mass excluded', uds:'urodynamics'},
   tx:{life:'lifestyle', pfmt3:'PFMT ≥3m', pfmt16:'PFMT ≥16w', bt6:'bladder training ≥6w', med1:'1 OAB medicine', med2:'≥2 OAB medicines', pessary:'pessary', vo:'vaginal oestrogen', declined:'declined non-surgical'},
-  proc:{colpo:'Colposuspension', afs:'Fascial sling', rmus:'Retropubic MUS', tot:'TO MUS', bulk:'Bulking agent', botox:'Botulinum toxin', ptns:'PTNS', sns:'SNS', ant:'Anterior repair', post:'Posterior repair', vh:'Vaginal hysterectomy', ssf:'Sacrospinous fixation', manchester:'Manchester', shp:'Sacrohysteropexy', scp:'Sacrocolpopexy', colpocleisis:'Colpocleisis', tvm:'Transvaginal mesh', meshrem:'Mesh removal', nonsurg:'Non-surgical', invest:'Further investigation'},
+  proc:{colpo:'Colposuspension', afs:'Fascial sling', bulk:'Bulking agent', botox:'Botulinum toxin', ptns:'PTNS', sns:'SNS', ant:'Anterior repair', post:'Posterior repair', vh:'Vaginal hysterectomy', ssf:'Sacrospinous fixation', manchester:'Manchester', shp:'Sacrohysteropexy', scp:'Sacrocolpopexy', colpocleisis:'Colpocleisis', meshrem:'Mesh removal', nonsurg:'Non-surgical', invest:'Further investigation'},
   cs:{pda:'NICE decision aid', options:'all options', mesh:'mesh/implant info', cisc:'CISC', registry:'registry consent'},
 };
 const lst = n => vals(n).map(x => L[n][x] || x).join(', ');
