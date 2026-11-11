@@ -504,8 +504,6 @@ footer{max-width:1360px;margin:0 auto;padding:8px 16px 40px;color:var(--muted);f
           <div><div class="hint" style="margin-bottom:4px">Stress urinary incontinence <span class="ref">1.5</span></div><div class="checks">
             <label><input type="checkbox" name="proc" value="colpo">Colposuspension (open / lap)</label>
             <label><input type="checkbox" name="proc" value="afs">Autologous rectus fascial sling</label>
-            <label><input type="checkbox" name="proc" value="rmus">Retropubic mid-urethral mesh sling</label>
-            <label><input type="checkbox" name="proc" value="tot">Transobturator mesh sling</label>
             <label><input type="checkbox" name="proc" value="bulking">Intramural bulking agent</label></div></div>
           <div><div class="hint" style="margin-bottom:4px">Overactive bladder <span class="ref">1.4.43–1.4.57</span></div><div class="checks">
             <label><input type="checkbox" name="proc" value="botox">Bladder botulinum toxin A</label>
@@ -521,7 +519,7 @@ footer{max-width:1360px;margin:0 auto;padding:8px 16px 40px;color:var(--muted);f
             <label><input type="checkbox" name="proc" value="shp">Sacrohysteropexy (mesh)</label>
             <label><input type="checkbox" name="proc" value="scp">Sacrocolpopexy (mesh)</label>
             <label><input type="checkbox" name="proc" value="colpocleisis">Colpocleisis</label>
-            <label><input type="checkbox" name="proc" value="tvm">Transvaginal prolapse mesh</label></div></div>
+            </div></div>
           <div><div class="hint" style="margin-bottom:4px">Mesh / other</div><div class="checks">
             <label><input type="checkbox" name="proc" value="mesh_partial">Partial mesh removal</label>
             <label><input type="checkbox" name="proc" value="mesh_total">Complete mesh removal</label>
@@ -531,7 +529,6 @@ footer{max-width:1360px;margin:0 auto;padding:8px 16px 40px;color:var(--muted);f
         </div></fieldset>
       <div class="grid two">
         <div class="field wide"><label class="lbl" for="plan_detail">Proposed plan &amp; rationale<span class="mds">*</span></label><textarea id="plan_detail" name="plan_detail" data-mds></textarea></div>
-        <div class="field" data-show="totSel"><label class="lbl" for="tot_reason">Why retropubic approach should be avoided<span class="mds">*</span> <span class="ref">1.5.10</span></label><textarea id="tot_reason" name="tot_reason" data-mds></textarea></div>
         <div class="field"><span class="lbl">Is the preferred option available at the referring unit? <span class="ref">1.1.4 / 1.5.5 / 1.8.5</span></span>
           <div class="seg"><label><input type="radio" name="avail_local" value="yes">Yes</label><label><input type="radio" name="avail_local" value="no">No</label></div></div>
         <div class="field" data-show="anySurgPOP"><span class="lbl">Uterine preservation discussed?</span>
@@ -700,10 +697,10 @@ function popq(){
 const roman = s => s === null ? '—' : ['0','I','II','III','IV'][s];
 
 /* ---------- derived state ---------- */
-const SUI_PROCS = ['colpo','afs','rmus','tot','bulking'];
+const SUI_PROCS = ['colpo','afs','bulking'];
 const OAB_PROCS = ['botox','ptns','sns','augment'];
-const POP_PROCS = ['ant','post','vh','manchester','ssf','shp','scp','colpocleisis','tvm'];
-const MESH_PROCS = ['rmus','tot','shp','scp','tvm'];
+const POP_PROCS = ['ant','post','vh','manchester','ssf','shp','scp','colpocleisis'];
+const MESH_PROCS = ['shp','scp'];
 const MESHREM = ['mesh_partial','mesh_total'];
 
 function derive(){
@@ -725,7 +722,6 @@ function derive(){
   d.popSurg = any('proc', POP_PROCS);
   d.meshSel = any('proc', MESH_PROCS);
   d.bulkSel = has('proc','bulking');
-  d.totSel = has('proc','tot');
   d.botoxSel = has('proc','botox');
   d.snsSel = has('proc','sns');
   d.ptnsSel = has('proc','ptns');
@@ -755,7 +751,6 @@ function derive(){
   if (d.popSurg && v('pop_recur') === 'yes') d.regionalTriggers.push('Repeat, same-site prolapse surgery');
   if (v('avail_local') === 'no') d.regionalTriggers.push('Preferred treatment not available at referring hospital');
   if (v('bowel_colorectal') === 'yes') d.regionalTriggers.push('Coexisting bowel problem may need colorectal intervention');
-  if (has('proc','tvm')) d.regionalTriggers.push('Vaginal mesh for prolapse is a treatment option');
   if (d.meshComp) d.regionalTriggers.push('Mesh complications / unexplained symptoms after mesh');
   if (d.anyInvasive && (d.fertility === 'yes' || d.fertility === 'unsure')) d.regionalTriggers.push('Considering surgery and may wish to have children');
   d.medList = meds();
@@ -794,7 +789,6 @@ const SHOW = {
   meshComp: d => d.meshComp,
   meshExposure: () => has('mesh_feat','exposure'),
   meshRemoval: () => v('mesh_removal') === 'yes' || any('proc', MESHREM),
-  totSel: d => d.totSel,
   anySurgPOP: d => d.popSurg && d.uterus !== 'absent',
   anyInvasive: d => d.anyInvasive,
   pdaNeeded: d => d.pdaNeeded,
@@ -934,7 +928,6 @@ const RULES = [
   { g:'Decision & consent', s:'s-sdm', ref:'1.5.7 / 1.8.6', t:'Mesh permanence explained', f:d => d.meshSel ? (has('couns','mesh_perm') ? ['pass'] : ['fail','Explain mesh is permanent and may not be fully removable']) : null },
   { g:'Decision & consent', s:'s-sdm', ref:'1.5.4 / 1.5.8 / 1.8.6', t:'Written implant information planned', f:d => (d.meshSel || d.bulkSel) ? (has('couns','implant_info') ? ['pass'] : ['fail','Give name, manufacturer, date and surgeon details']) : null },
   { g:'Decision & consent', s:'s-sdm', ref:'1.5.3', t:'Bulking agent counselling', f:d => d.bulkSel ? (has('couns','bulking') ? ['pass'] : ['fail','Counsel on permanence, repeat injections, lower efficacy']) : null },
-  { g:'Decision & consent', s:'s-plan', ref:'1.5.10', t:'Transobturator approach justified', f:d => d.totSel ? (v('tot_reason') ? ['pass'] : ['fail','TO slings only where retropubic route should be avoided']) : null },
   { g:'Decision & consent', s:'s-plan', ref:'1.8.3', t:'No prophylactic continence surgery', f:d => d.popSurg && d.suiSurg && d.noUI ? ['fail','Do not offer SUI surgery to women without incontinence'] : null },
   { g:'Decision & consent', s:'s-sdm', ref:'1.8.4', t:'Risk of new incontinence explained', f:d => d.popSurg && d.antApicalPOP && d.noUI ? (has('couns','denovo') ? ['pass'] : ['fail','Anterior/apical prolapse surgery without UI']) : null },
   { g:'Decision & consent', s:'s-sdm', ref:'1.9.2', t:'Concurrent SUI + prolapse surgery counselling', f:d => d.concurrent && !d.noUI ? (has('couns','concurrent') ? ['pass'] : ['fail','Explain uncertain benefit beyond 1 year']) : null },
@@ -1165,7 +1158,7 @@ function line(label, val){ return val ? `${label.padEnd(26)} ${val}\n` : ''; }
 function list(n, map){ return vals(n).filter(x => x !== 'none').map(x => map ? (map[x] || x) : x).join(', '); }
 const PRES = {sui:'Stress UI', oab:'Urgency UI / OAB', mui:'Mixed UI', pop:'Pelvic organ prolapse', voiding:'Voiding dysfunction', ruti:'Recurrent UTI', mesh:'Mesh complication', bowel:'Bowel symptoms', pain:'Bladder/pelvic pain', sexual:'Sexual dysfunction', fistula:'Suspected fistula'};
 const PREV = {sui:'Continence surgery', sui_mesh:'MUS (mesh)', bulking:'Bulking agent', pop_ant:'Anterior repair', pop_post:'Posterior repair', pop_apical:'Apical/vault procedure', pop_mesh:'Prolapse mesh', hyst:'Hysterectomy', botox:'Bladder botox', cancer:'Pelvic cancer surgery', rt:'Pelvic radiotherapy', colorectal:'Colorectal surgery'};
-const PROC = {colpo:'Colposuspension', afs:'Autologous fascial sling', rmus:'Retropubic MUS', tot:'Transobturator MUS', bulking:'Bulking agent', botox:'Bladder botulinum toxin A', ptns:'PTNS', sns:'Sacral nerve stimulation', augment:'Augmentation/diversion', ant:'Anterior repair', post:'Posterior repair', vh:'Vaginal hysterectomy', manchester:'Manchester repair', ssf:'Sacrospinous fixation', shp:'Sacrohysteropexy', scp:'Sacrocolpopexy', colpocleisis:'Colpocleisis', tvm:'Transvaginal mesh', mesh_partial:'Partial mesh removal', mesh_total:'Complete mesh removal', invest:'Further investigation', nonsurg:'Continue non-surgical', other:'Other'};
+const PROC = {colpo:'Colposuspension', afs:'Autologous fascial sling', bulking:'Bulking agent', botox:'Bladder botulinum toxin A', ptns:'PTNS', sns:'Sacral nerve stimulation', augment:'Augmentation/diversion', ant:'Anterior repair', post:'Posterior repair', vh:'Vaginal hysterectomy', manchester:'Manchester repair', ssf:'Sacrospinous fixation', shp:'Sacrohysteropexy', scp:'Sacrocolpopexy', colpocleisis:'Colpocleisis', mesh_partial:'Partial mesh removal', mesh_total:'Complete mesh removal', invest:'Further investigation', nonsurg:'Continue non-surgical', other:'Other'};
 const UDSF = {normal:'Normal', usi:'USI', do:'DO', do_inc:'DO incontinence', voiding:'Voiding dysfunction', low_compliance:'Low compliance', hypersens:'Increased sensation'};
 const COUNS = {all_options:'All options incl. not locally available', risks:'Benefits/risks/uncertainties', mesh_perm:'Mesh permanence', implant_info:'Written implant info', bulking:'Bulking counselling', denovo:'De novo UI risk', concurrent:'Concurrent surgery uncertainty', cisc:'Botox/CISC', sns:'SNS implications', sexual:'Urinary/bowel/sexual effects'};
 const ATT = {cons1:'Consultant 1', cons2:'Consultant 2', subspec:'Urogynae subspecialist', urologist:'Urologist', nurse:'Nurse specialist', physio:'PF physiotherapist', colorectal:'Colorectal surgeon', radiologist:'Radiologist', pain:'Pain specialist', elderly:'Care of elderly', ot:'OT', psych:'Psychologist'};
@@ -1230,7 +1223,7 @@ function buildSummary(){
     s += line('Registry / MHRA', `${v('mesh_registry') || '?'} / ${v('mesh_mhra') || '?'}`) + line('Removal considered', v('mesh_removal')) + line('Investigations', v('mesh_invest'));
   }
   s += H('Proposed management');
-  s += line('Procedure(s)', list('proc', PROC)) + line('Plan & rationale', v('plan_detail')) + line('TO justification', v('tot_reason'));
+  s += line('Procedure(s)', list('proc', PROC)) + line('Plan & rationale', v('plan_detail'));
   s += line('Available locally', v('avail_local')) + line('Uterine preservation', v('uterine_pres'));
   if (d.anyInvasive) {
     s += line('Decision aid(s)', vals('pda').map(x => ({sui:'NICE SUI surgery', uterine:'NICE uterine prolapse', vault:'NICE vault prolapse', other:'Other'}[x])).join(', '));
