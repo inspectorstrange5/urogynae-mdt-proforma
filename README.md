@@ -6,4 +6,10 @@ A single-page form for submitting cases to a urogynaecology multidisciplinary te
 - Drafts can be saved to and reopened from a local JSON file.
 - "Generate MDT summary" produces a structured summary to copy, download or print.
 
+Three versions:
+
+- `/` full pro-forma
+- `/medium/` standard: anonymised (no name, NHS number, hospital number or date of birth), with POP-Q staging, sexual activity and uroflowmetry
+- `/quick/` quick: shortest data set
+
 This is a documentation and decision-support aid. It does not replace clinical judgement, local policy or the current NICE guidance. The minimum data set is a suggestion, not an official dataset.

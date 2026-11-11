@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MDT Pro-forma (Standard)</title>
+<meta name="description" content="Anonymised urogynaecology MDT case submission with POP-Q, uroflowmetry and NICE NG123 checks.">
+<style>
+:root{
+  --bg:#f4f6f8; --card:#fff; --ink:#17212b; --muted:#5b6875; --line:#d9e0e6; --soft:#eef2f5;
+  --accent:#0b6e75; --accent-ink:#fff; --accent-soft:#e1f1f2;
+  --pass:#1f7a3f; --pass-soft:#e3f4e8; --warn:#9a6200; --warn-soft:#fdf1dc; --fail:#b3261e; --fail-soft:#fbe4e2;
+  --focus:#f2b705; --radius:10px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1418; --card:#171e24; --ink:#e6ecf1; --muted:#9aa7b3; --line:#2b353e; --soft:#1e272e;
+    --accent:#4fb8bf; --accent-ink:#06282b; --accent-soft:#163437;
+    --pass:#5fd08a; --pass-soft:#163524; --warn:#f0b54a; --warn-soft:#3a2c12; --fail:#ff8a80; --fail-soft:#3d1a18;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1418; --card:#171e24; --ink:#e6ecf1; --muted:#9aa7b3; --line:#2b353e; --soft:#1e272e;
+  --accent:#4fb8bf; --accent-ink:#06282b; --accent-soft:#163437;
+  --pass:#5fd08a; --pass-soft:#163524; --warn:#f0b54a; --warn-soft:#3a2c12; --fail:#ff8a80; --fail-soft:#3d1a18;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+header{position:sticky;top:0;z-index:20;background:var(--card);border-bottom:1px solid var(--line)}
+.hd{max-width:1200px;margin:0 auto;padding:10px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.hd h1{font-size:17px;margin:0;font-weight:650}
+.hd a{color:var(--accent);font-size:13px}
+.hd .sp{flex:1}
+.btn{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:7px 12px;border-radius:8px;font:inherit;font-size:13.5px;cursor:pointer}
+.btn:hover{background:var(--soft)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+:focus-visible{outline:3px solid var(--focus);outline-offset:1px}
+.wrap{max-width:1200px;margin:0 auto;padding:16px;display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:18px;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin-bottom:12px}
+.card h2{font-size:14px;margin:0 0 10px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.card h2 b{color:var(--accent);margin-right:6px}
+.row{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px 12px;margin-bottom:10px}
+.f{display:flex;flex-direction:column;gap:3px;min-width:0}
+.f.wide{grid-column:1/-1}
+.f label,.lbl{font-size:12.5px;font-weight:600}
+.req{color:var(--fail)}
+input[type=text],input[type=number],input[type=date],select,textarea{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:7px;padding:6px 8px;width:100%;min-width:0}
+textarea{min-height:54px;resize:vertical}
+input.bad{border-color:var(--fail)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.chips label{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-size:13.5px;cursor:pointer;background:var(--card);user-select:none}
+.chips label:has(input:checked){border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
+.chips input{position:absolute;opacity:0;width:1px;height:1px}
+.chips label:has(input:focus-visible){outline:3px solid var(--focus)}
+.grp{font-size:12px;color:var(--muted);margin:2px 0 5px;font-weight:600}
+[hidden]{display:none !important}
+.hint{font-size:12px;color:var(--muted)}
+aside{position:sticky;top:70px;max-height:calc(100vh - 86px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius)}
+.ah{padding:12px 14px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--card)}
+.ah h2{font-size:14px;margin:0 0 6px}
+.tally{display:flex;gap:6px;flex-wrap:wrap;font-size:12.5px}
+.tally span{border-radius:999px;padding:2px 9px;font-weight:600}
+.t-pass{background:var(--pass-soft);color:var(--pass)}.t-warn{background:var(--warn-soft);color:var(--warn)}.t-fail{background:var(--fail-soft);color:var(--fail)}
+.meter{height:6px;background:var(--soft);border-radius:99px;overflow:hidden;margin:6px 0}
+.meter i{display:block;height:100%;background:var(--accent);width:0;transition:width .2s}
+ul.rules{list-style:none;margin:0;padding:6px}
+ul.rules li{display:grid;grid-template-columns:16px 1fr;gap:8px;padding:6px 8px;font-size:13px;border-radius:6px}
+.ic{width:16px;height:16px;border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:700;margin-top:2px}
+.pass .ic{background:var(--pass-soft);color:var(--pass)}.warn .ic{background:var(--warn-soft);color:var(--warn)}.fail .ic{background:var(--fail-soft);color:var(--fail)}
+.ref{font-size:10.5px;font-weight:600;color:var(--accent);background:var(--accent-soft);border-radius:4px;padding:0 4px;margin-left:3px;white-space:nowrap}
+.msg{color:var(--muted);font-size:12px}
+.empty{padding:12px 14px;color:var(--muted);font-size:13px}
+.mbar{display:none}
+.popq{display:grid;grid-template-columns:repeat(3,minmax(0,96px));gap:6px;margin-bottom:8px}
+.popq .cell{display:flex;flex-direction:column;gap:2px;border:1px solid var(--line);border-radius:7px;padding:5px 6px;background:var(--soft)}
+.popq .cell span{font-size:11.5px;color:var(--muted);font-weight:600}
+.popq input{text-align:center;padding:4px}
+.stage,.flowout{display:flex;flex-wrap:wrap;gap:6px;font-size:13px;margin-bottom:6px}
+.stage span,.flowout span{border-radius:999px;padding:3px 10px;background:var(--soft);border:1px solid var(--line)}
+.stage b{color:var(--accent)}
+.flowout .bad{background:var(--warn-soft);color:var(--warn);border-color:transparent;font-weight:600}
+.flowout .ok{background:var(--pass-soft);color:var(--pass);border-color:transparent;font-weight:600}
+dialog{border:1px solid var(--line);border-radius:12px;padding:0;width:min(760px,calc(100vw - 32px));max-height:calc(100vh - 48px);background:var(--card);color:var(--ink)}
+dialog::backdrop{background:rgba(10,15,20,.55)}
+.dh{display:flex;gap:8px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line)}
+.dh h2{flex:1;font-size:15px;margin:0}
+.db{padding:14px;overflow:auto;max-height:calc(100vh - 130px)}
+pre{white-space:pre-wrap;font:12.5px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;margin:0}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:8px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:60}
+.toast.show{opacity:1}
+footer{max-width:1200px;margin:0 auto;padding:4px 16px 40px;color:var(--muted);font-size:12px}
+@media (max-width:860px){
+  .wrap{grid-template-columns:minmax(0,1fr);padding:12px 16px 80px}
+  aside{position:fixed;left:0;right:0;bottom:56px;top:auto;max-height:65vh;border-radius:14px 14px 0 0;transform:translateY(calc(100% + 56px));transition:transform .25s;z-index:24}
+  aside.open{transform:none;box-shadow:0 -6px 24px rgba(0,0,0,.18)}
+  .mbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:25;background:var(--card);border-top:1px solid var(--line);padding:10px 16px;gap:10px;align-items:center}
+  .mbar .tally{flex:1}
+}
+@media print{
+  header,.wrap,.mbar,footer{display:none !important}
+  body{background:#fff;color:#000}
+  dialog{display:block !important;position:static;border:0;width:auto;max-height:none}
+  .dh{display:none}.db{max-height:none;padding:0}
+}
+</style>
+</head>
+<body>
+<header><div class="hd">
+  <h1>Urogynae MDT — Standard submission</h1>
+  <a href="../quick/">Quick</a>
+  <a href="../">Full</a>
+  <div class="sp"></div>
+  <button class="btn" type="button" id="bEx">Example</button>
+  <button class="btn" type="button" id="bClr">Clear</button>
+  <button class="btn primary" type="button" id="bSum">MDT summary</button>
+</div></header>
+
+<div class="wrap">
+<main>
+<form id="f" autocomplete="off" novalidate>
+
+<section class="card">
+  <h2><b>1</b>Case</h2>
+  <div class="row">
+    <div class="f"><label for="ref">Case reference</label><input type="text" id="ref" name="ref" placeholder="MDT list no. — no identifiers"></div>
+    <div class="f"><label for="cons">Consultant <span class="req">*</span></label><input type="text" id="cons" name="cons" data-req></div>
+    <div class="f"><label for="mdate">MDT date</label><input type="date" id="mdate" name="mdate"></div>
+  </div>
+  <div class="grp">MDT <span class="req">*</span></div>
+  <div class="chips" data-req-group="mdt"><label><input type="radio" name="mdt" value="local">Local</label><label><input type="radio" name="mdt" value="regional">Regional</label></div>
+  <div class="row"><div class="f wide"><label for="q">Question for MDT <span class="req">*</span></label><input type="text" id="q" name="q" data-req placeholder="e.g. Colposuspension vs fascial sling?"></div></div>
+</section>
+
+<section class="card">
+  <h2><b>2</b>Background</h2>
+  <div class="row">
+    <div class="f"><label for="bmi">BMI <span class="req">*</span></label><input type="number" id="bmi" name="bmi" step="0.1" data-req></div>
+    <div class="f"><label for="parity">Parity</label><input type="text" id="parity" name="parity" placeholder="P2"></div>
+    <div class="f wide"><label for="pmh">Key comorbidities / meds</label><input type="text" id="pmh" name="pmh"></div>
+  </div>
+  <div class="grp">Flags</div>
+  <div class="chips">
+    <label><input type="checkbox" name="bg" value="fertility">Wants future children</label>
+    <label><input type="checkbox" name="bg" value="postmeno">Postmenopausal</label>
+    <label><input type="checkbox" name="bg" value="cognitive">Cognitive impairment</label>
+    <label><input type="checkbox" name="bg" value="frail">Frail / high anaesthetic risk</label>
+  </div>
+  <div class="grp">Sexually active? <span class="ref">1.6.1</span></div>
+  <div class="chips">
+    <label><input type="radio" name="sex" value="yes">Yes</label>
+    <label><input type="radio" name="sex" value="no">No</label>
+    <label><input type="radio" name="sex" value="na">Not asked / declined to say</label>
+  </div>
+  <div class="grp">Previous surgery</div>
+  <div class="chips">
+    <label><input type="checkbox" name="prev" value="sui">Continence surgery</label>
+    <label><input type="checkbox" name="prev" value="pop">Prolapse surgery</label>
+    <label><input type="checkbox" name="prev" value="samesite">Same-site prolapse recurrence</label>
+    <label><input type="checkbox" name="prev" value="mesh">Mesh implant</label>
+    <label><input type="checkbox" name="prev" value="hyst">Hysterectomy</label>
+  </div>
+</section>
+
+<section class="card">
+  <h2><b>3</b>Diagnosis</h2>
+  <div class="chips" data-req-group="dx">
+    <label><input type="checkbox" name="dx" value="sui">Stress UI</label>
+    <label><input type="checkbox" name="dx" value="muis">Mixed UI – stress predominant</label>
+    <label><input type="checkbox" name="dx" value="muiu">Mixed UI – urge / unclear</label>
+    <label><input type="checkbox" name="dx" value="oab">OAB / urgency UI</label>
+    <label><input type="checkbox" name="dx" value="pop">Prolapse</label>
+    <label><input type="checkbox" name="dx" value="voiding">Voiding dysfunction</label>
+    <label><input type="checkbox" name="dx" value="ruti">Recurrent UTI</label>
+    <label><input type="checkbox" name="dx" value="mesh">Mesh complication</label>
+    <label><input type="checkbox" name="dx" value="bowel">Bowel problem needing colorectal input</label>
+  </div>
+  <div data-if="pop">
+    <div class="grp">POP-Q (cm from hymen; negative = above) <span class="ref">1.6.3</span></div>
+    <div class="popq" aria-label="POP-Q grid">
+      <label class="cell"><span>Aa</span><input type="number" step="0.5" min="-3" max="3" name="pq_aa"></label>
+      <label class="cell"><span>Ba</span><input type="number" step="0.5" name="pq_ba"></label>
+      <label class="cell"><span>C</span><input type="number" step="0.5" name="pq_c"></label>
+      <label class="cell"><span>gh</span><input type="number" step="0.5" min="0" name="pq_gh"></label>
+      <label class="cell"><span>pb</span><input type="number" step="0.5" min="0" name="pq_pb"></label>
+      <label class="cell"><span>tvl</span><input type="number" step="0.5" min="0" name="pq_tvl"></label>
+      <label class="cell"><span>Ap</span><input type="number" step="0.5" min="-3" max="3" name="pq_ap"></label>
+      <label class="cell"><span>Bp</span><input type="number" step="0.5" name="pq_bp"></label>
+      <label class="cell"><span>D</span><input type="number" step="0.5" name="pq_d" placeholder="—"></label>
+    </div>
+    <div class="stage" id="stageOut"></div>
+    <p class="hint">Leave D blank after hysterectomy. Stage is calculated for each compartment.</p>
+  </div>
+  <div class="row"><div class="f wide"><label for="hx">Brief history &amp; key findings</label><textarea id="hx" name="hx" placeholder="Symptoms, impact, examination, urodynamic result"></textarea></div></div>
+</section>
+
+<section class="card">
+  <h2><b>4</b>Assessment done</h2>
+  <div class="chips">
+    <label data-if="ui"><input type="checkbox" name="wu" value="diary">Bladder diary ≥3 days</label>
+    <label data-if="ui"><input type="checkbox" name="wu" value="dip">Urine dipstick</label>
+    <label data-if="pvr"><input type="checkbox" name="wu" value="pvr">Post-void residual</label>
+    <label><input type="checkbox" name="wu" value="pfa">Digital PF assessment</label>
+    <label data-if="ui"><input type="checkbox" name="wu" value="quest">Validated questionnaire</label>
+    <label data-if="sui"><input type="checkbox" name="wu" value="demo">SUI demonstrated on exam</label>
+    <label><input type="checkbox" name="wu" value="mass">Pelvic mass excluded</label>
+    <label><input type="checkbox" name="wu" value="uds">Urodynamics done</label>
+  </div>
+  <p class="hint" id="udsHint" hidden></p>
+  <div class="grp" style="margin-top:12px">Uroflowmetry</div>
+  <div class="row">
+    <div class="f"><label for="vv">Voided volume (ml)</label><input type="number" id="vv" name="vv" min="0" step="1"></div>
+    <div class="f"><label for="qmax">Qmax (ml/s)</label><input type="number" id="qmax" name="qmax" min="0" step="0.1"></div>
+    <div class="f"><label for="qave">Qave (ml/s)</label><input type="number" id="qave" name="qave" min="0" step="0.1"></div>
+    <div class="f"><label for="pvrml">PVR (ml)</label><input type="number" id="pvrml" name="pvrml" min="0" step="1"></div>
+    <div class="f"><label for="curve">Flow curve</label><select id="curve" name="curve"><option value=""></option><option value="normal">Normal bell</option><option value="plateau">Plateau / flattened</option><option value="intermittent">Intermittent / straining</option><option value="prolonged">Prolonged</option><option value="super">Super-flow</option></select></div>
+  </div>
+  <div class="flowout" id="flowOut" hidden></div>
+</section>
+
+<section class="card">
+  <h2><b>5</b>Non-surgical treatment tried</h2>
+  <div class="chips">
+    <label><input type="checkbox" name="tx" value="life">Lifestyle advice</label>
+    <label data-if="ui"><input type="checkbox" name="tx" value="pfmt3">Supervised PFMT ≥3 months</label>
+    <label data-if="pop"><input type="checkbox" name="tx" value="pfmt16">Supervised PFMT ≥16 weeks</label>
+    <label data-if="oab"><input type="checkbox" name="tx" value="bt6">Bladder training ≥6 weeks</label>
+    <label data-if="oab"><input type="checkbox" name="tx" value="med1">1 OAB medicine</label>
+    <label data-if="oab"><input type="checkbox" name="tx" value="med2">≥2 OAB medicines / beta-3</label>
+    <label data-if="pop"><input type="checkbox" name="tx" value="pessary">Pessary tried / offered</label>
+    <label><input type="checkbox" name="tx" value="vo">Vaginal oestrogen</label>
+    <label><input type="checkbox" name="tx" value="declined">Declined non-surgical options</label>
+  </div>
+</section>
+
+<section class="card">
+  <h2><b>6</b>Proposal</h2>
+  <div class="grp">SUI</div>
+  <div class="chips" data-req-group="proc">
+    <label><input type="checkbox" name="proc" value="colpo">Colposuspension</label>
+    <label><input type="checkbox" name="proc" value="afs">Fascial sling</label>
+    <label><input type="checkbox" name="proc" value="bulk">Bulking agent</label>
+  </div>
+  <div class="grp">OAB</div>
+  <div class="chips">
+    <label><input type="checkbox" name="proc" value="botox">Botulinum toxin</label>
+    <label><input type="checkbox" name="proc" value="ptns">PTNS</label>
+    <label><input type="checkbox" name="proc" value="sns">Sacral nerve stim</label>
+  </div>
+  <div class="grp">Prolapse</div>
+  <div class="chips">
+    <label><input type="checkbox" name="proc" value="ant">Anterior repair</label>
+    <label><input type="checkbox" name="proc" value="post">Posterior repair</label>
+    <label><input type="checkbox" name="proc" value="vh">Vaginal hysterectomy</label>
+    <label><input type="checkbox" name="proc" value="ssf">Sacrospinous fixation</label>
+    <label><input type="checkbox" name="proc" value="manchester">Manchester</label>
+    <label><input type="checkbox" name="proc" value="shp">Sacrohysteropexy</label>
+    <label><input type="checkbox" name="proc" value="scp">Sacrocolpopexy</label>
+    <label><input type="checkbox" name="proc" value="colpocleisis">Colpocleisis</label>
+  </div>
+  <div class="grp">Other</div>
+  <div class="chips">
+    <label><input type="checkbox" name="proc" value="meshrem">Mesh removal</label>
+    <label><input type="checkbox" name="proc" value="nonsurg">Non-surgical / advice</label>
+    <label><input type="checkbox" name="proc" value="invest">Further investigation</label>
+  </div>
+  <div class="row"><div class="f wide"><label for="plan">Plan / notes</label><input type="text" id="plan" name="plan"></div></div>
+</section>
+
+<section class="card" data-if="invasive">
+  <h2><b>7</b>Counselling</h2>
+  <div class="chips">
+    <label data-if="pda"><input type="checkbox" name="cs" value="pda">NICE decision aid used</label>
+    <label><input type="checkbox" name="cs" value="options">All options incl. not available locally</label>
+    <label data-if="meshp"><input type="checkbox" name="cs" value="mesh">Mesh permanence &amp; implant info</label>
+    <label data-if="popS"><input type="checkbox" name="cs" value="sexfx">Effect on urinary, bowel &amp; sexual function</label>
+    <label data-if="botox"><input type="checkbox" name="cs" value="cisc">CISC discussed</label>
+    <label data-if="reg"><input type="checkbox" name="cs" value="registry">Registry consent asked</label>
+  </div>
+  <div class="row"><div class="f wide"><label for="pref">Patient preference</label><input type="text" id="pref" name="pref"></div></div>
+</section>
+
+<section class="card">
+  <h2><b>8</b>MDT outcome <span class="hint" style="text-transform:none;letter-spacing:0;font-weight:400">(at meeting)</span></h2>
+  <div class="row"><div class="f wide"><label for="out">Recommendation &amp; actions</label><textarea id="out" name="out"></textarea></div>
+    <div class="f wide"><label for="att">Present</label><input type="text" id="att" name="att" placeholder="2 consultants, specialist nurse, physio…"></div></div>
+</section>
+</form>
+</main>
+
+<aside id="panel" aria-label="NICE NG123 checks">
+  <div class="ah">
+    <h2>NG123 checks</h2>
+    <div class="hint" id="reqTxt"></div>
+    <div class="meter"><i id="reqBar"></i></div>
+    <div class="tally" id="tally"></div>
+  </div>
+  <ul class="rules" id="rules"></ul>
+</aside>
+</div>
+<div class="mbar"><div class="tally" id="tallyM"></div><button class="btn" type="button" id="bPanel">Checks</button></div>
+
+<footer>Short data set drawn from NICE NG123 (2019, updated). Decision support only; it does not replace clinical judgement or the current guidance. Nothing entered is stored or sent anywhere. No patient identifiers are collected: link the case to the patient record in your MDT list. For complex or regional cases use the <a href="../">full pro-forma</a>.</footer>
+
+<dialog id="dlg">
+  <div class="dh"><h2>MDT summary</h2><button class="btn" type="button" id="bCopy">Copy</button><button class="btn primary" type="button" id="bPrint">Print</button><button class="btn" type="button" id="bClose" aria-label="Close">✕</button></div>
+  <div class="db"><pre id="out2"></pre></div>
+</dialog>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(() => {
+const f = document.getElementById('f');
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const vals = n => [...f.querySelectorAll(`[name="${n}"]`)].filter(e => (e.type === 'checkbox' || e.type === 'radio') ? e.checked : e.value.trim()).map(e => e.value.trim());
+const v = n => vals(n)[0] || '';
+const num = n => { const x = parseFloat(v(n)); return Number.isFinite(x) ? x : null; };
+const has = (n, x) => vals(n).includes(x);
+const any = (n, xs) => xs.some(x => has(n, x));
+
+const SUI_P = ['colpo','afs','bulk'], OAB_P = ['botox','ptns','sns'];
+const POP_P = ['ant','post','vh','ssf','manchester','shp','scp','colpocleisis'];
+const MESH_P = ['shp','scp'];
+const ROMAN = ['0','I','II','III','IV'];
+
+/* POP-Q staging per compartment (ICS) */
+function popq(){
+  const g = k => num('pq_' + k), tvl = g('tvl');
+  const st = (pts, zero) => {
+    const xs = pts.filter(x => x !== null); if (!xs.length) return null;
+    const lead = Math.max(...xs);
+    if (tvl !== null && lead > 1 && lead >= tvl - 2) return 4;
+    if (lead > 1) return 3;
+    if (lead >= -1) return 2;
+    return zero(xs) ? 0 : 1;
+  };
+  const p = {
+    ant: st([g('aa'), g('ba')], xs => xs.every(x => x <= -3)),
+    api: st([g('c'), g('d')], () => tvl !== null && g('c') !== null && g('c') <= -(tvl - 2)),
+    post: st([g('ap'), g('bp')], xs => xs.every(x => x <= -3)),
+  };
+  const all = [p.ant, p.api, p.post].filter(x => x !== null);
+  p.overall = all.length ? Math.max(...all) : null;
+  p.complete = ['aa','ba','c','ap','bp','tvl'].every(k => g(k) !== null);
+  return p;
+}
+
+/* Uroflow interpretation (common clinical thresholds, not NICE) */
+function flow(){
+  const vv = num('vv'), q = num('qmax'), pvr = num('pvrml'), c = v('curve');
+  const r = {done: q !== null || vv !== null || pvr !== null || !!c, flags: [], notes: []};
+  if (vv !== null && vv < 150) r.notes.push('VV <150 ml: Qmax less reliable');
+  if (q !== null && q < 15 && (vv === null || vv >= 150)) r.flags.push('Qmax <15 ml/s');
+  if (pvr !== null && pvr > 100) r.flags.push('PVR >100 ml');
+  if (['plateau','intermittent','prolonged'].includes(c)) r.flags.push(c + ' curve');
+  r.abn = r.flags.length > 0;
+  return r;
+}
+
+function derive(){
+  const d = {};
+  d.sui = any('dx', ['sui','muis','muiu']); d.oab = any('dx', ['oab','muiu','muis']);
+  d.ui = d.sui || d.oab; d.pop = has('dx','pop'); d.noUI = !d.ui;
+  d.suiS = any('proc', SUI_P); d.oabS = any('proc', OAB_P); d.popS = any('proc', POP_P);
+  d.meshP = any('proc', MESH_P) || has('proc','bulk');
+  d.invasive = d.suiS || d.oabS || d.popS || has('proc','meshrem');
+  d.pq = popq(); d.fl = flow();
+  d.antApi = d.pop && ((d.pq.ant || 0) >= 2 || (d.pq.api || 0) >= 2);
+  d.uds = [];
+  if (d.suiS) {
+    if (has('dx','muiu')) d.uds.push('urge-predominant/unclear MUI');
+    if (has('dx','voiding')) d.uds.push('voiding dysfunction');
+    else if (d.fl.abn) d.uds.push('abnormal uroflow (' + d.fl.flags.join(', ') + ')');
+    if (d.antApi) d.uds.push('anterior/apical prolapse');
+    if (has('prev','sui')) d.uds.push('previous SUI surgery');
+  }
+  if (has('proc','botox') || has('proc','sns')) d.uds.push('OAB invasive treatment');
+  d.reg = [];
+  if (d.suiS && has('prev','sui')) d.reg.push('repeat continence surgery');
+  if (d.popS && has('prev','samesite')) d.reg.push('repeat same-site prolapse surgery');
+  if (has('dx','bowel')) d.reg.push('bowel problem needing colorectal input');
+  if (has('dx','mesh') || has('proc','meshrem')) d.reg.push('mesh complication');
+  if (d.invasive && has('bg','fertility')) d.reg.push('surgery with future childbearing wish');
+  return d;
+}
+
+const IF = {
+  pop: d => d.pop, ui: d => d.ui, sui: d => d.sui, oab: d => d.oab,
+  pvr: d => has('dx','voiding') || has('dx','ruti'),
+  invasive: d => d.invasive, pda: d => d.suiS || d.popS, meshp: d => d.meshP, popS: d => d.popS,
+  botox: () => has('proc','botox'), reg: d => d.suiS || d.popS || has('dx','mesh'),
+};
+
+const R = (ref, t, ok, msg, level) => ({ref, t, st: ok ? 'pass' : (level || 'fail'), msg: ok ? '' : msg});
+function rules(d){
+  const out = [], P = (c, r) => { if (c) out.push(r); };
+  const decl = has('tx','declined'), sex = v('sex'), stg = d.pq.overall;
+  P(true, R('1.1', 'Question for MDT', !!v('q'), 'State the question'));
+  P(d.reg.length, R('1.1.4', 'Regional MDT', v('mdt') === 'regional', 'Needs regional MDT: ' + d.reg.join('; ')));
+  P(d.ui, R('1.3.13', 'Bladder diary ≥3 days', has('wu','diary'), 'Not recorded'));
+  P(d.ui, R('1.3.5', 'Urine dipstick', has('wu','dip'), 'Not recorded'));
+  P(IF.pvr(d), R('1.3.10', 'Post-void residual', has('wu','pvr') || num('pvrml') !== null, 'Voiding symptoms or recurrent UTI'));
+  P(d.fl.abn && !has('dx','voiding'), R('Uroflow', 'Possible voiding dysfunction', false, d.fl.flags.join(', ') + ': consider adding to diagnosis', 'warn'));
+  P(d.ui || d.pop, R('1.3.4', 'Digital PF assessment', has('wu','pfa'), 'Not recorded'));
+  P(d.ui, R('1.3.12', 'Validated questionnaire', has('wu','quest'), 'Not recorded'));
+  P(d.pop, R('1.6.3', 'POP-Q recorded', d.pq.complete, 'Enter Aa, Ba, C, Ap, Bp and tvl'));
+  P(d.pop || d.invasive, R('1.6.1', 'Sexual activity recorded', !!sex, 'Record whether sexually active', 'warn'));
+  P(d.invasive || d.pop, R('1.6.3', 'Pelvic mass excluded', has('wu','mass'), 'Not recorded'));
+  P(d.uds.length, R('1.3.16', 'Urodynamics', has('wu','uds'), 'Indicated: ' + d.uds.join('; ')));
+  P(d.suiS && !d.uds.length && has('wu','demo') && has('wu','uds'), R('1.3.15', 'Urodynamics not needed', false, 'Clear SUI demonstrated: not required before primary surgery', 'warn'));
+  P(d.suiS && !d.uds.length && !has('wu','demo'), R('1.3.15', 'SUI demonstrated', false, 'Not demonstrated: is the diagnosis clear?', 'warn'));
+  P(d.suiS, R('1.4.4', 'PFMT ≥3 months before SUI surgery', has('tx','pfmt3') || decl, 'Not recorded'));
+  P(d.oabS, R('1.4.11', 'Bladder training ≥6 weeks', has('tx','bt6') || decl, 'Not recorded'));
+  P(d.oabS, R('1.4.44', 'OAB medicines tried', any('tx', ['med1','med2']), 'Medicines must fail first'));
+  P(d.oabS && has('tx','med1') && !has('tx','med2'), R('1.4.31', 'Second OAB medicine', false, 'Only one tried', 'warn'));
+  P(d.popS, R('1.7.6 / 1.8.1', 'Non-surgical prolapse options', any('tx', ['pessary','pfmt16']) || decl, 'Pessary / PFMT not documented', 'warn'));
+  P(d.popS && stg !== null && stg <= 2, R('1.7.5', 'PFMT ≥16 weeks for stage I–II', has('tx','pfmt16') || decl, `Stage ${ROMAN[stg]}: consider first`, 'warn'));
+  P(d.pop && !d.popS && stg !== null && stg >= 3 && !has('tx','pessary'), R('1.7.6', 'Pessary for stage III+', false, 'Not tried or offered', 'warn'));
+  P(parseFloat(v('bmi')) > 30 && d.ui, R('1.4.3', 'Weight advice (BMI >30)', has('tx','life'), 'Not recorded', 'warn'));
+  P(d.popS && d.suiS && d.noUI, R('1.8.3', 'No preventive continence surgery', false, 'No incontinence recorded'));
+  P(has('proc','colpocleisis'), R('1.8.18', 'Colpocleisis: no penetrative sex intended', sex === 'no', sex === 'yes' ? 'Recorded as sexually active' : 'Sexual activity not recorded', sex === 'yes' ? 'fail' : 'warn'));
+  P(IF.pda(d), R('1.5.1 / 1.8.2', 'NICE decision aid', has('cs','pda'), 'Not used'));
+  P(d.invasive, R('1.5.1', 'All options discussed', has('cs','options'), 'Not recorded'));
+  P(d.popS, R('1.8.2', 'Effect on sexual function discussed', has('cs','sexfx'), 'Not recorded'));
+  P(d.meshP, R('1.5.7 / 1.8.6', 'Mesh / implant counselling', has('cs','mesh'), 'Not recorded'));
+  P(has('proc','botox'), R('1.4.46', 'CISC counselling', has('cs','cisc'), 'Not recorded'));
+  P(IF.reg(d), R('1.2.1', 'Registry consent', has('cs','registry'), 'Not asked'));
+  P(has('proc','ptns'), R('1.4.15', 'PTNS criteria', any('tx', ['med1','med2']), 'Medicines must fail; woman declines botox/SNS', any('tx',['med1','med2']) ? 'warn' : 'fail'));
+  return out;
+}
+
+function shown(el){ for (let n = el; n && n !== document.body; n = n.parentElement) if (n.hidden) return false; return true; }
+const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const rom = s => s === null ? '—' : ROMAN[s];
+
+let last = [];
+function update(){
+  const d = derive();
+  $$('[data-if]').forEach(el => { el.hidden = !IF[el.dataset.if](d); });
+  const p = d.pq;
+  $('#stageOut').innerHTML = p.overall === null ? '' : `<span>Anterior ${rom(p.ant)}</span><span>Apical ${rom(p.api)}</span><span>Posterior ${rom(p.post)}</span><span><b>Overall stage ${rom(p.overall)}</b></span>`;
+  const fo = $('#flowOut'), fl = d.fl;
+  fo.hidden = !fl.done;
+  fo.innerHTML = (fl.abn ? fl.flags.map(x => `<span class="bad">${esc(x)}</span>`).join('') : (num('qmax') !== null ? '<span class="ok">Flow within usual limits</span>' : '')) + fl.notes.map(x => `<span>${esc(x)}</span>`).join('');
+  const uh = $('#udsHint'); uh.hidden = !d.uds.length; uh.textContent = 'Urodynamics indicated: ' + d.uds.join('; ') + ' (1.3.16 / 1.4.43)';
+  let t = 0, dn = 0;
+  $$('[data-req]').forEach(e => { if (shown(e)) { t++; if (e.value.trim()) dn++; } });
+  $$('[data-req-group]').forEach(g => { t++; if (vals(g.dataset.reqGroup).length) dn++; });
+  $('#reqBar').style.width = Math.round(100 * dn / t) + '%';
+  $('#reqTxt').textContent = `Required fields: ${dn}/${t}`;
+  last = rules(d);
+  const c = {pass:0, warn:0, fail:0}; last.forEach(r => c[r.st]++);
+  const tl = `<span class="t-pass">${c.pass} met</span><span class="t-warn">${c.warn} review</span><span class="t-fail">${c.fail} not met</span>`;
+  $('#tally').innerHTML = tl; $('#tallyM').innerHTML = tl;
+  const o = {fail:0, warn:1, pass:2};
+  $('#rules').innerHTML = vals('dx').length ? last.slice().sort((a,b) => o[a.st] - o[b.st]).map(r => `<li class="${r.st}"><span class="ic">${r.st === 'pass' ? '✓' : r.st === 'warn' ? '!' : '✕'}</span><div>${r.t}<span class="ref">${r.ref}</span>${r.msg ? `<div class="msg">${esc(r.msg)}</div>` : ''}</div></li>`).join('') : '<li class="empty" style="display:block">Choose a diagnosis to see checks.</li>';
+}
+
+const L = {
+  bg:{fertility:'wants future children', postmeno:'postmenopausal', cognitive:'cognitive impairment', frail:'frail/high anaesthetic risk'},
+  prev:{sui:'continence surgery', pop:'prolapse surgery', samesite:'same-site recurrence', mesh:'mesh implant', hyst:'hysterectomy'},
+  dx:{sui:'Stress UI', muis:'Mixed UI (stress-predominant)', muiu:'Mixed UI (urge/unclear)', oab:'OAB/UUI', pop:'Prolapse', voiding:'Voiding dysfunction', ruti:'Recurrent UTI', mesh:'Mesh complication', bowel:'Bowel (colorectal input)'},
+  wu:{diary:'diary ≥3d', dip:'dipstick', pvr:'PVR', pfa:'PF assessment', quest:'questionnaire', demo:'SUI demonstrated', mass:'mass excluded', uds:'urodynamics'},
+  tx:{life:'lifestyle', pfmt3:'PFMT ≥3m', pfmt16:'PFMT ≥16w', bt6:'bladder training ≥6w', med1:'1 OAB medicine', med2:'≥2 OAB medicines', pessary:'pessary', vo:'vaginal oestrogen', declined:'declined non-surgical'},
+  proc:{colpo:'Colposuspension', afs:'Fascial sling', bulk:'Bulking agent', botox:'Botulinum toxin', ptns:'PTNS', sns:'SNS', ant:'Anterior repair', post:'Posterior repair', vh:'Vaginal hysterectomy', ssf:'Sacrospinous fixation', manchester:'Manchester', shp:'Sacrohysteropexy', scp:'Sacrocolpopexy', colpocleisis:'Colpocleisis', meshrem:'Mesh removal', nonsurg:'Non-surgical', invest:'Further investigation'},
+  cs:{pda:'NICE decision aid', options:'all options', sexfx:'urinary/bowel/sexual effects', mesh:'mesh/implant info', cisc:'CISC', registry:'registry consent'},
+  sex:{yes:'Yes', no:'No', na:'Not asked / declined'},
+  curve:{normal:'normal bell', plateau:'plateau', intermittent:'intermittent/straining', prolonged:'prolonged', super:'super-flow'},
+};
+const lst = n => vals(n).map(x => L[n][x] || x).join(', ');
+function summary(){
+  update();
+  const d = derive(), p = d.pq, ln = (k, x) => x ? `${(k + ':').padEnd(14)}${x}\n` : '';
+  let s = `UROGYNAE MDT – ${v('mdt') ? v('mdt').toUpperCase() : '?'}${v('mdate') ? ' – ' + v('mdate') : ''}\n\n`;
+  s += ln('Case ref', v('ref')) + ln('Consultant', v('cons')) + ln('QUESTION', v('q'));
+  s += ln('Background', [v('bmi') && 'BMI ' + v('bmi'), v('parity'), lst('bg'), v('pmh')].filter(Boolean).join('; '));
+  s += ln('Sex. active', lst('sex'));
+  s += ln('Prev surgery', lst('prev'));
+  s += ln('Diagnosis', lst('dx'));
+  if (d.pop) {
+    const g = k => (v('pq_' + k) || '–').padStart(4);
+    s += `POP-Q:        Aa ${g('aa')} | Ba ${g('ba')} | C   ${g('c')}\n              gh ${g('gh')} | pb ${g('pb')} | tvl ${g('tvl')}\n              Ap ${g('ap')} | Bp ${g('bp')} | D   ${g('d')}\n`;
+    s += ln('Stage', p.overall === null ? '?' : `ant ${rom(p.ant)}, apical ${rom(p.api)}, post ${rom(p.post)} → overall ${rom(p.overall)}`);
+  }
+  s += ln('History', v('hx')) + ln('Assessment', lst('wu'));
+  if (d.fl.done) s += ln('Uroflow', [v('vv') && `VV ${v('vv')} ml`, v('qmax') && `Qmax ${v('qmax')} ml/s`, v('qave') && `Qave ${v('qave')} ml/s`, v('pvrml') && `PVR ${v('pvrml')} ml`, v('curve') && L.curve[v('curve')] + ' curve'].filter(Boolean).join(', ') + (d.fl.abn ? ` [${d.fl.flags.join('; ')}]` : ''));
+  s += ln('Tried', lst('tx'));
+  s += ln('Proposal', lst('proc')) + ln('Plan', v('plan')) + ln('Counselling', lst('cs')) + ln('Preference', v('pref'));
+  const bad = last.filter(r => r.st !== 'pass');
+  s += `\nNG123: ${last.filter(r => r.st === 'pass').length} met, ${last.filter(r => r.st === 'warn').length} review, ${last.filter(r => r.st === 'fail').length} not met\n`;
+  bad.forEach(r => s += ` - ${r.st === 'fail' ? 'NOT MET' : 'REVIEW'} ${r.ref}: ${r.t}${r.msg ? ' – ' + r.msg : ''}\n`);
+  if (v('out') || v('att')) s += '\n' + ln('Outcome', v('out')) + ln('Present', v('att'));
+  return s;
+}
+
+f.addEventListener('input', update); f.addEventListener('change', update);
+$('#bPanel').onclick = () => $('#panel').classList.toggle('open');
+$('#bSum').onclick = () => { $('#out2').textContent = summary(); $('#dlg').showModal(); };
+$('#bClose').onclick = () => $('#dlg').close();
+$('#bPrint').onclick = () => window.print();
+$('#bCopy').onclick = async () => { try { await navigator.clipboard.writeText($('#out2').textContent); toast('Copied'); } catch { toast('Select the text and copy'); } };
+$('#bClr').onclick = () => { if (confirm('Clear the form?')) { f.reset(); update(); scrollTo(0,0); } };
+$('#bEx').onclick = () => {
+  f.reset();
+  const set = {ref:'Case 4', cons:'Mr A Example', mdt:'local', q:'Colposuspension + anterior repair?', bmi:'28', parity:'P2', pmh:'Asthma',
+    bg:['postmeno'], sex:'yes', dx:['sui','pop'], hx:'Leaks on cough/running, vaginal bulge. SUI demonstrated. ICIQ-UI SF 13. Urodynamics: USI, stable detrusor.',
+    pq_aa:'1', pq_ba:'1', pq_c:'-5', pq_gh:'4', pq_pb:'3', pq_tvl:'9', pq_ap:'-2', pq_bp:'-2', pq_d:'-7',
+    wu:['diary','dip','pfa','quest','demo','mass','uds'], vv:'320', qmax:'24', qave:'12', pvrml:'20', curve:'normal',
+    tx:['life','pfmt3','pfmt16','pessary'], proc:['colpo','ant'], plan:'Anterior repair + open colposuspension', cs:['pda','options','sexfx','registry'], pref:'Wants to avoid mesh'};
+  for (const [k, x] of Object.entries(set)) f.querySelectorAll(`[name="${k}"]`).forEach(e => { if (e.type === 'checkbox' || e.type === 'radio') e.checked = [].concat(x).includes(e.value); else e.value = x; });
+  update(); toast('Fictional example loaded');
+};
+addEventListener('beforeunload', e => { if (vals('q').length || vals('dx').length) { e.preventDefault(); e.returnValue = ''; } });
+function toast(m){ const t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(t.h); t.h = setTimeout(() => t.classList.remove('show'), 2000); }
+update();
+})();
+</script>
+</body>
+</html>
