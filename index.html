@@ -1,0 +1,1270 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Urogynae MDT Pro-forma</title>
+<meta name="description" content="Case submission pro-forma for the urogynaecology MDT with a suggested minimum data set mapped to NICE NG123.">
+<style>
+:root{
+  --bg:#f4f6f8; --card:#ffffff; --ink:#17212b; --muted:#5b6875; --line:#d9e0e6; --soft:#eef2f5;
+  --accent:#0b6e75; --accent-ink:#ffffff; --accent-soft:#e1f1f2;
+  --pass:#1f7a3f; --pass-soft:#e3f4e8; --warn:#9a6200; --warn-soft:#fdf1dc; --fail:#b3261e; --fail-soft:#fbe4e2;
+  --na:#7b8794; --focus:#f2b705;
+  --radius:10px; --shadow:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1418; --card:#171e24; --ink:#e6ecf1; --muted:#9aa7b3; --line:#2b353e; --soft:#1e272e;
+    --accent:#4fb8bf; --accent-ink:#06282b; --accent-soft:#163437;
+    --pass:#5fd08a; --pass-soft:#163524; --warn:#f0b54a; --warn-soft:#3a2c12; --fail:#ff8a80; --fail-soft:#3d1a18;
+    --na:#7f8b96; --shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1418; --card:#171e24; --ink:#e6ecf1; --muted:#9aa7b3; --line:#2b353e; --soft:#1e272e;
+  --accent:#4fb8bf; --accent-ink:#06282b; --accent-soft:#163437;
+  --pass:#5fd08a; --pass-soft:#163524; --warn:#f0b54a; --warn-soft:#3a2c12; --fail:#ff8a80; --fail-soft:#3d1a18;
+  --na:#7f8b96; --shadow:none;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:80px}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+header.top{position:sticky;top:0;z-index:20;background:var(--card);border-bottom:1px solid var(--line)}
+.top-inner{max-width:1360px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.top h1{font-size:17px;margin:0;font-weight:650;letter-spacing:-.01em}
+.top .sub{color:var(--muted);font-size:12.5px}
+.top .spacer{flex:1}
+.btn{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:7px 12px;border-radius:8px;font:inherit;font-size:13.5px;cursor:pointer;white-space:nowrap}
+.btn:hover{background:var(--soft)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.btn.primary:hover{filter:brightness(1.07)}
+.btn.ghost{border-color:transparent}
+.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--focus);outline-offset:1px}
+.layout{max-width:1360px;margin:0 auto;padding:16px;display:grid;grid-template-columns:200px minmax(0,1fr) 360px;gap:20px;align-items:start}
+nav.toc{position:sticky;top:76px;font-size:13px}
+nav.toc a{display:flex;gap:8px;align-items:center;color:var(--muted);text-decoration:none;padding:5px 8px;border-radius:6px}
+nav.toc a:hover{background:var(--soft);color:var(--ink)}
+nav.toc a .dot{width:8px;height:8px;border-radius:50%;background:var(--line);flex:none}
+nav.toc a.hidden{display:none}
+nav.toc a .dot.ok{background:var(--pass)} nav.toc a .dot.part{background:var(--warn)}
+.notice{background:var(--accent-soft);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;font-size:13.5px;margin-bottom:16px}
+.notice strong{font-weight:650}
+section.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 18px 8px;margin-bottom:16px}
+section.card[hidden]{display:none}
+section.card>h2{font-size:16px;margin:0 0 2px;display:flex;gap:10px;align-items:baseline}
+section.card>h2 .num{color:var(--accent);font-variant-numeric:tabular-nums}
+section.card>.lead{color:var(--muted);font-size:13px;margin:0 0 14px}
+.ref{display:inline-block;font-size:11px;font-weight:600;color:var(--accent);background:var(--accent-soft);border-radius:4px;padding:1px 5px;margin-left:4px;vertical-align:1px;white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px 16px;margin-bottom:14px}
+.grid.two{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.field{display:flex;flex-direction:column;gap:4px;min-width:0}
+.field.wide{grid-column:1/-1}
+.field[hidden],.sub-block[hidden]{display:none}
+label.lbl,.lbl{font-size:13px;font-weight:600}
+.lbl .mds{color:var(--fail);margin-left:2px}
+.hint{font-size:12px;color:var(--muted)}
+.err{font-size:12px;color:var(--fail)}
+input[type=text],input[type=number],input[type=date],select,textarea{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:7px;padding:7px 9px;width:100%;min-width:0}
+textarea{min-height:68px;resize:vertical}
+input.invalid{border-color:var(--fail)}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg label,.checks label{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--line);border-radius:7px;padding:5px 9px;font-size:13.5px;cursor:pointer;background:var(--card);user-select:none}
+.seg label:has(input:checked),.checks label:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+.seg input,.checks input{accent-color:var(--accent);margin:0}
+.checks{display:flex;flex-wrap:wrap;gap:6px}
+.checks.col{flex-direction:column;align-items:flex-start}
+fieldset{border:0;margin:0;padding:0;min-width:0}
+legend{padding:0;margin-bottom:4px}
+h3.subh{font-size:13.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:6px 0 10px;font-weight:650}
+.sub-block{border-top:1px dashed var(--line);padding-top:12px;margin-top:4px}
+.popq{display:grid;grid-template-columns:repeat(3,minmax(70px,110px));gap:6px;margin:6px 0 10px}
+.popq .cell{display:flex;flex-direction:column;gap:2px;border:1px solid var(--line);border-radius:7px;padding:6px;background:var(--soft)}
+.popq .cell span{font-size:11.5px;color:var(--muted);font-weight:600}
+.popq input{padding:4px 6px;text-align:center}
+.stagebox{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.chip{font-size:12.5px;border-radius:999px;padding:3px 10px;background:var(--soft);border:1px solid var(--line)}
+.chip b{font-weight:650}
+.derived{font-size:13px;padding:8px 10px;border-radius:7px;background:var(--soft);border:1px solid var(--line);margin-bottom:12px}
+.derived.fail{background:var(--fail-soft);border-color:transparent;color:var(--fail)}
+.derived.warn{background:var(--warn-soft);border-color:transparent;color:var(--warn)}
+.derived.pass{background:var(--pass-soft);border-color:transparent;color:var(--pass)}
+table.meds{width:100%;border-collapse:collapse;font-size:13.5px;margin-bottom:10px}
+table.meds th{text-align:left;font-size:12px;color:var(--muted);font-weight:600;padding:4px}
+table.meds td{padding:3px 4px}
+.tblwrap{overflow-x:auto}
+/* Compliance panel */
+aside.panel{position:sticky;top:76px;max-height:calc(100vh - 92px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.panel-head{padding:14px 16px 10px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--card);z-index:1}
+.panel-head h2{font-size:15px;margin:0 0 8px}
+.meter{height:8px;background:var(--soft);border-radius:99px;overflow:hidden;margin:4px 0 8px}
+.meter i{display:block;height:100%;background:var(--accent);width:0;transition:width .25s}
+.tally{display:flex;gap:6px;flex-wrap:wrap;font-size:12.5px}
+.tally span{border-radius:999px;padding:2px 9px;font-weight:600}
+.t-pass{background:var(--pass-soft);color:var(--pass)} .t-warn{background:var(--warn-soft);color:var(--warn)} .t-fail{background:var(--fail-soft);color:var(--fail)}
+.verdict{margin-top:10px;font-size:13px;font-weight:600;padding:8px 10px;border-radius:7px}
+.rules{list-style:none;margin:0;padding:8px}
+.rules li{display:grid;grid-template-columns:18px 1fr;gap:8px;padding:8px;border-radius:7px;font-size:13px;cursor:pointer}
+.rules li:hover{background:var(--soft)}
+.rules .ic{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700;margin-top:1px}
+.rules .pass .ic{background:var(--pass-soft);color:var(--pass)}
+.rules .warn .ic{background:var(--warn-soft);color:var(--warn)}
+.rules .fail .ic{background:var(--fail-soft);color:var(--fail)}
+.rules .msg{color:var(--muted);font-size:12px;margin-top:2px}
+.rules .grp{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding:10px 8px 2px;cursor:default;display:block}
+.rules .grp:hover{background:none}
+.panel-empty{padding:16px;color:var(--muted);font-size:13px}
+.mobile-bar{display:none}
+/* Modal */
+dialog{border:1px solid var(--line);border-radius:12px;padding:0;width:min(900px,calc(100vw - 32px));max-height:calc(100vh - 48px);background:var(--card);color:var(--ink)}
+dialog::backdrop{background:rgba(10,15,20,.55)}
+.dlg-head{display:flex;gap:8px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.dlg-head h2{font-size:15px;margin:0;flex:1}
+.dlg-body{padding:16px;overflow:auto;max-height:calc(100vh - 140px)}
+#summaryOut{white-space:pre-wrap;font:12.5px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;margin:0}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:8px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:50}
+.toast.show{opacity:1}
+footer{max-width:1360px;margin:0 auto;padding:8px 16px 40px;color:var(--muted);font-size:12px}
+@media (max-width:1180px){
+  .layout{grid-template-columns:minmax(0,1fr) 340px}
+  nav.toc{display:none}
+}
+@media (max-width:860px){
+  .layout{grid-template-columns:minmax(0,1fr);padding:12px 16px 90px}
+  aside.panel{position:fixed;left:0;right:0;bottom:58px;top:auto;max-height:70vh;border-radius:14px 14px 0 0;transform:translateY(calc(100% + 58px));transition:transform .25s;z-index:24}
+  aside.panel.open{transform:none;box-shadow:0 -6px 24px rgba(0,0,0,.18)}
+  .mobile-bar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:25;background:var(--card);border-top:1px solid var(--line);padding:10px 16px;gap:10px;align-items:center}
+  .mobile-bar .tally{flex:1}
+  .top .sub{display:none}
+  .popq{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media print{
+  body{background:#fff;color:#000}
+  header.top,nav.toc,aside.panel,.mobile-bar,.layout,footer,.notice{display:none !important}
+  dialog{display:block !important;position:static;border:0;width:auto;max-height:none}
+  dialog .dlg-head{display:none}
+  .dlg-body{max-height:none;overflow:visible;padding:0}
+  #summaryOut{font-size:10.5pt;color:#000}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-inner">
+    <div>
+      <h1>Urogynaecology MDT — Case Submission</h1>
+      <div class="sub">Suggested minimum data set mapped to NICE NG123 (2019, updated)</div>
+    </div>
+    <div class="spacer"></div>
+    <button class="btn ghost" type="button" id="btnExample" title="Fill the form with a fictional example case">Example case</button>
+    <button class="btn" type="button" id="btnLoad">Open draft</button>
+    <button class="btn" type="button" id="btnSave">Save draft</button>
+    <button class="btn" type="button" id="btnClear">Clear</button>
+    <button class="btn primary" type="button" id="btnSummary">Generate MDT summary</button>
+    <input type="file" id="fileIn" accept="application/json,.json" hidden>
+  </div>
+</header>
+
+<div class="layout">
+  <nav class="toc" id="toc" aria-label="Sections"></nav>
+
+  <main>
+    <div class="notice">
+      <strong>How to use.</strong> Fields marked <span style="color:var(--fail);font-weight:700">*</span> form the suggested minimum data set (MDS). Sections appear as they become relevant to the presenting problem and proposed treatment. The panel on the right checks the case against NICE NG123 as you type.
+      Nothing is stored or sent anywhere: use <em>Save draft</em> to keep a file locally, or <em>Generate MDT summary</em> to print or copy into your MDT list. Follow local information governance rules for patient-identifiable data.
+    </div>
+
+    <form id="form" autocomplete="off" novalidate>
+
+    <!-- 1. Referral -->
+    <section class="card" id="s-referral" data-title="Referral &amp; MDT">
+      <h2><span class="num">1</span> Referral &amp; MDT details</h2>
+      <p class="lead">Who is asking, which MDT, and what you want it to decide.</p>
+      <div class="grid">
+        <div class="field"><label class="lbl" for="mdt_type">MDT requested<span class="mds">*</span> <span class="ref">1.1.1 / 1.1.4</span></label>
+          <select id="mdt_type" name="mdt_type" data-mds><option value="">Select…</option><option value="local">Local MDT</option><option value="regional">Regional (complex / mesh) MDT</option></select></div>
+        <div class="field"><label class="lbl" for="mdt_date">MDT meeting date<span class="mds">*</span></label><input type="date" id="mdt_date" name="mdt_date" data-mds></div>
+        <div class="field"><label class="lbl" for="ref_consultant">Responsible consultant<span class="mds">*</span></label><input type="text" id="ref_consultant" name="ref_consultant" data-mds></div>
+        <div class="field"><label class="lbl" for="ref_by">Submitted by (name / role)<span class="mds">*</span></label><input type="text" id="ref_by" name="ref_by" data-mds></div>
+        <div class="field"><label class="lbl" for="ref_site">Referring hospital / trust<span class="mds">*</span></label><input type="text" id="ref_site" name="ref_site" data-mds></div>
+        <div class="field"><label class="lbl" for="ref_contact">Contact (bleep / ext / email)</label><input type="text" id="ref_contact" name="ref_contact"></div>
+        <div class="field"><span class="lbl">Priority</span>
+          <div class="seg"><label><input type="radio" name="priority" value="Routine">Routine</label><label><input type="radio" name="priority" value="Soon">Soon</label><label><input type="radio" name="priority" value="Urgent">Urgent</label></div></div>
+        <div class="field"><span class="lbl">Discussion type</span>
+          <div class="seg"><label><input type="radio" name="disc_type" value="New">New case</label><label><input type="radio" name="disc_type" value="Re-discussion">Re-discussion</label><label><input type="radio" name="disc_type" value="Post-op / outcome">Post-op</label></div></div>
+        <div class="field wide"><label class="lbl" for="mdt_question">Specific question for the MDT<span class="mds">*</span></label>
+          <textarea id="mdt_question" name="mdt_question" data-mds placeholder="e.g. Suitability for colposuspension vs autologous fascial sling after failed 4 months of supervised PFMT"></textarea></div>
+      </div>
+    </section>
+
+    <!-- 2. Patient -->
+    <section class="card" id="s-patient" data-title="Patient">
+      <h2><span class="num">2</span> Patient details &amp; background</h2>
+      <p class="lead">Identifiers, and the factors NG123 asks you to weigh when choosing treatment <span class="ref">1.7.1</span>.</p>
+      <div class="grid">
+        <div class="field"><label class="lbl" for="pt_name">Name<span class="mds">*</span></label><input type="text" id="pt_name" name="pt_name" data-mds></div>
+        <div class="field"><label class="lbl" for="pt_nhs">NHS number<span class="mds">*</span> <span class="ref">1.2.2</span></label><input type="text" id="pt_nhs" name="pt_nhs" inputmode="numeric" placeholder="000 000 0000" data-mds><span class="err" id="nhsErr" hidden>Fails the NHS number check digit</span></div>
+        <div class="field"><label class="lbl" for="pt_hosp">Hospital number<span class="mds">*</span></label><input type="text" id="pt_hosp" name="pt_hosp" data-mds></div>
+        <div class="field"><label class="lbl" for="pt_dob">Date of birth<span class="mds">*</span></label><input type="date" id="pt_dob" name="pt_dob" data-mds><span class="hint" id="ageOut"></span></div>
+        <div class="field"><label class="lbl" for="pt_height">Height (cm)</label><input type="number" id="pt_height" name="pt_height" min="100" max="220" step="0.5"></div>
+        <div class="field"><label class="lbl" for="pt_weight">Weight (kg)</label><input type="number" id="pt_weight" name="pt_weight" min="25" max="300" step="0.1"></div>
+        <div class="field"><label class="lbl" for="pt_bmi">BMI (kg/m²)<span class="mds">*</span> <span class="ref">1.4.3</span></label><input type="number" id="pt_bmi" name="pt_bmi" step="0.1" data-mds><span class="hint">Calculated from height and weight, or enter directly</span></div>
+        <div class="field"><label class="lbl" for="pt_parity">Parity / obstetric history<span class="mds">*</span></label><input type="text" id="pt_parity" name="pt_parity" placeholder="e.g. P3 (2 SVD, 1 forceps)" data-mds></div>
+        <div class="field"><span class="lbl">Wishes to have children in future?<span class="mds">*</span> <span class="ref">1.1.4</span></span>
+          <div class="seg" data-mds-group="fertility"><label><input type="radio" name="fertility" value="no">No</label><label><input type="radio" name="fertility" value="yes">Yes</label><label><input type="radio" name="fertility" value="unsure">Unsure</label></div></div>
+        <div class="field"><span class="lbl">Menopausal status<span class="mds">*</span></span>
+          <div class="seg" data-mds-group="meno"><label><input type="radio" name="meno" value="Pre">Pre</label><label><input type="radio" name="meno" value="Peri">Peri</label><label><input type="radio" name="meno" value="Post">Post</label></div></div>
+        <div class="field"><span class="lbl">Sexually active?</span>
+          <div class="seg"><label><input type="radio" name="sex_active" value="Yes">Yes</label><label><input type="radio" name="sex_active" value="No">No</label><label><input type="radio" name="sex_active" value="Not recorded">Not recorded</label></div></div>
+        <div class="field"><span class="lbl">Smoker</span>
+          <div class="seg"><label><input type="radio" name="smoker" value="Never">Never</label><label><input type="radio" name="smoker" value="Ex">Ex</label><label><input type="radio" name="smoker" value="Current">Current</label></div></div>
+      </div>
+      <div class="grid two">
+        <div class="field"><label class="lbl" for="pt_comorb">Relevant comorbidities<span class="mds">*</span></label><textarea id="pt_comorb" name="pt_comorb" data-mds placeholder="Diabetes, neurological disease, chronic cough, constipation, connective tissue disorder…"></textarea></div>
+        <div class="field"><label class="lbl" for="pt_meds">Current medication &amp; allergies<span class="mds">*</span></label><textarea id="pt_meds" name="pt_meds" data-mds></textarea></div>
+        <fieldset class="field"><legend class="lbl">Cognitive / physical function <span class="ref">1.4.26 / 1.7.1</span></legend>
+          <div class="checks"><label><input type="checkbox" name="func" value="cognitive">Cognitive impairment / dementia</label><label><input type="checkbox" name="func" value="mobility">Reduced mobility</label><label><input type="checkbox" name="func" value="dexterity">Poor manual dexterity</label><label><input type="checkbox" name="func" value="frail">Frailty</label><label><input type="checkbox" name="func" value="anaes">High anaesthetic risk</label></div></fieldset>
+        <div class="field"><label class="lbl" for="pt_acb">Anticholinergic burden score <span class="ref">1.4.26</span></label><input type="number" id="pt_acb" name="pt_acb" min="0" max="30"><span class="hint">Total load from all current medicines</span></div>
+      </div>
+      <h3 class="subh">Previous pelvic surgery &amp; treatment</h3>
+      <div class="grid two">
+        <fieldset class="field wide"><legend class="lbl">Previous procedures<span class="mds">*</span> <span class="ref">1.1.4 / 1.3.16 / 1.3.20</span></legend>
+          <div class="checks" data-mds-group="prev">
+            <label><input type="checkbox" name="prev" value="none">None</label>
+            <label><input type="checkbox" name="prev" value="sui">Continence (SUI) surgery</label>
+            <label><input type="checkbox" name="prev" value="sui_mesh">Mid-urethral mesh sling</label>
+            <label><input type="checkbox" name="prev" value="bulking">Bulking agent</label>
+            <label><input type="checkbox" name="prev" value="pop_ant">Anterior prolapse repair</label>
+            <label><input type="checkbox" name="prev" value="pop_post">Posterior prolapse repair</label>
+            <label><input type="checkbox" name="prev" value="pop_apical">Apical / vault procedure</label>
+            <label><input type="checkbox" name="prev" value="pop_mesh">Prolapse mesh (vaginal or abdominal)</label>
+            <label><input type="checkbox" name="prev" value="hyst">Hysterectomy</label>
+            <label><input type="checkbox" name="prev" value="botox">Bladder botulinum toxin</label>
+            <label><input type="checkbox" name="prev" value="cancer">Pelvic cancer surgery</label>
+            <label><input type="checkbox" name="prev" value="rt">Pelvic radiotherapy</label>
+            <label><input type="checkbox" name="prev" value="colorectal">Colorectal / pelvic floor surgery</label>
+          </div></fieldset>
+        <div class="field wide"><label class="lbl" for="prev_detail">Details (dates, surgeon, unit, outcome)</label><textarea id="prev_detail" name="prev_detail"></textarea></div>
+      </div>
+    </section>
+
+    <!-- 3. Presenting problem -->
+    <section class="card" id="s-present" data-title="Presenting problem">
+      <h2><span class="num">3</span> Presenting problem &amp; working diagnosis</h2>
+      <p class="lead">Categorise any incontinence as stress, mixed or urgency/OAB, and treat the predominant symptom <span class="ref">1.3.1</span>.</p>
+      <fieldset class="field" style="margin-bottom:14px"><legend class="lbl">Presenting problems (select all)<span class="mds">*</span></legend>
+        <div class="checks" data-mds-group="pres">
+          <label><input type="checkbox" name="pres" value="sui">Stress UI</label>
+          <label><input type="checkbox" name="pres" value="oab">Urgency UI / OAB</label>
+          <label><input type="checkbox" name="pres" value="mui">Mixed UI</label>
+          <label><input type="checkbox" name="pres" value="pop">Pelvic organ prolapse</label>
+          <label><input type="checkbox" name="pres" value="voiding">Voiding dysfunction</label>
+          <label><input type="checkbox" name="pres" value="ruti">Recurrent UTI</label>
+          <label><input type="checkbox" name="pres" value="mesh">Mesh complication / symptoms after mesh</label>
+          <label><input type="checkbox" name="pres" value="bowel">Bowel symptoms (FI / obstructed defaecation)</label>
+          <label><input type="checkbox" name="pres" value="pain">Bladder / pelvic pain</label>
+          <label><input type="checkbox" name="pres" value="sexual">Sexual dysfunction</label>
+          <label><input type="checkbox" name="pres" value="fistula">Suspected fistula</label>
+        </div></fieldset>
+      <div class="grid">
+        <div class="field" data-show="mui"><span class="lbl">Predominant symptom in mixed UI<span class="mds">*</span> <span class="ref">1.3.1 / 1.3.16</span></span>
+          <div class="seg" data-mds-group="mui_pred"><label><input type="radio" name="mui_pred" value="stress">Stress</label><label><input type="radio" name="mui_pred" value="urge">Urge</label><label><input type="radio" name="mui_pred" value="unclear">Unclear</label></div></div>
+        <div class="field" data-show="anyBowel"><span class="lbl">Bowel problem may need colorectal intervention? <span class="ref">1.1.4</span></span>
+          <div class="seg"><label><input type="radio" name="bowel_colorectal" value="yes">Yes</label><label><input type="radio" name="bowel_colorectal" value="no">No</label></div></div>
+        <div class="field"><label class="lbl" for="duration">Symptom duration</label><input type="text" id="duration" name="duration" placeholder="e.g. 3 years"></div>
+      </div>
+      <div class="grid two">
+        <div class="field wide"><label class="lbl" for="hpc">History &amp; impact on quality of life<span class="mds">*</span></label><textarea id="hpc" name="hpc" data-mds placeholder="Symptoms, triggers, pad use, impact on work/exercise/relationships, patient goals"></textarea></div>
+      </div>
+      <fieldset class="field" style="margin-bottom:14px"><legend class="lbl">Red flags <span class="ref">1.3.20 / 1.3.21 / 1.6.1</span></legend>
+        <div class="checks">
+          <label><input type="checkbox" name="redflag" value="none">None identified</label>
+          <label><input type="checkbox" name="redflag" value="haematuria">Haematuria</label>
+          <label><input type="checkbox" name="redflag" value="mass">Pelvic mass</label>
+          <label><input type="checkbox" name="redflag" value="palpable_bladder">Palpable bladder after voiding</label>
+          <label><input type="checkbox" name="redflag" value="neuro">Suspected neurological disease</label>
+          <label><input type="checkbox" name="redflag" value="persistent_uti">Persistent unexplained UTI</label>
+        </div></fieldset>
+      <div class="grid two" data-show="hasRedflag"><div class="field wide"><label class="lbl" for="redflag_action">Red flag action taken (e.g. suspected cancer pathway, neurology referral)<span class="mds">*</span></label><textarea id="redflag_action" name="redflag_action" data-mds></textarea></div></div>
+    </section>
+
+    <!-- 4. Assessment -->
+    <section class="card" id="s-assess" data-title="Assessment">
+      <h2><span class="num">4</span> Clinical assessment</h2>
+      <p class="lead">Baseline investigations NG123 expects before treatment decisions.</p>
+      <div data-show="anyUI">
+        <h3 class="subh">Bladder diary <span class="ref">1.3.13</span></h3>
+        <div class="grid">
+          <div class="field"><label class="lbl" for="diary_days">Diary days completed<span class="mds">*</span></label><input type="number" id="diary_days" name="diary_days" min="0" max="14" data-mds><span class="hint">Minimum 3 days, work and leisure</span></div>
+          <div class="field"><label class="lbl" for="diary_freq">Daytime frequency (mean)</label><input type="number" id="diary_freq" name="diary_freq" min="0" step="0.5"></div>
+          <div class="field"><label class="lbl" for="diary_noct">Nocturia (episodes/night)</label><input type="number" id="diary_noct" name="diary_noct" min="0" step="0.5"></div>
+          <div class="field"><label class="lbl" for="diary_mvv">Max voided volume (ml)</label><input type="number" id="diary_mvv" name="diary_mvv" min="0"></div>
+          <div class="field"><label class="lbl" for="diary_intake">Fluid intake (ml/24h)</label><input type="number" id="diary_intake" name="diary_intake" min="0"></div>
+          <div class="field"><label class="lbl" for="diary_caff">Caffeinated drinks/day</label><input type="number" id="diary_caff" name="diary_caff" min="0"></div>
+          <div class="field"><label class="lbl" for="diary_leaks">Leaks/24h</label><input type="number" id="diary_leaks" name="diary_leaks" min="0" step="0.5"></div>
+        </div>
+        <h3 class="subh">Urine &amp; residual</h3>
+        <div class="grid">
+          <div class="field"><span class="lbl">Urine dipstick<span class="mds">*</span> <span class="ref">1.3.5</span></span>
+            <div class="seg" data-mds-group="dipstick"><label><input type="radio" name="dipstick" value="negative">Negative</label><label><input type="radio" name="dipstick" value="abnormal">Abnormal</label><label><input type="radio" name="dipstick" value="not done">Not done</label></div></div>
+          <div class="field" data-show="dipAbn"><label class="lbl" for="dip_detail">Dipstick result / MSU <span class="ref">1.3.6–1.3.9</span></label><input type="text" id="dip_detail" name="dip_detail" placeholder="e.g. Leu+ Nit+, MSU: E. coli, treated"></div>
+          <div class="field"><label class="lbl" for="pvr">Post-void residual (ml)<span class="mds" data-show="pvrNeeded">*</span> <span class="ref">1.3.10</span></label><input type="number" id="pvr" name="pvr" min="0"><span class="hint">Required if voiding symptoms or recurrent UTI; bladder scan preferred</span></div>
+          <div class="field"><span class="lbl">PVR method</span>
+            <div class="seg"><label><input type="radio" name="pvr_method" value="bladder scan">Bladder scan</label><label><input type="radio" name="pvr_method" value="catheter">Catheter</label></div></div>
+        </div>
+      </div>
+      <h3 class="subh">Examination</h3>
+      <div class="grid">
+        <div class="field"><span class="lbl">Digital pelvic floor assessment<span class="mds">*</span> <span class="ref">1.3.4 / 1.6.3</span></span>
+          <div class="seg" data-mds-group="pf_assess"><label><input type="radio" name="pf_assess" value="done">Done</label><label><input type="radio" name="pf_assess" value="not done">Not done</label></div></div>
+        <div class="field"><label class="lbl" for="oxford">Modified Oxford grade</label>
+          <select id="oxford" name="oxford"><option value="">—</option><option>0</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+        <div class="field" data-show="anySUI"><span class="lbl">Stress leakage demonstrated on examination?<span class="mds">*</span> <span class="ref">1.3.15</span></span>
+          <div class="seg" data-mds-group="sui_demo"><label><input type="radio" name="sui_demo" value="yes">Yes</label><label><input type="radio" name="sui_demo" value="no">No</label><label><input type="radio" name="sui_demo" value="not tested">Not tested</label></div></div>
+        <div class="field"><span class="lbl">Genitourinary syndrome of menopause / atrophy <span class="ref">1.6.3</span></span>
+          <div class="seg"><label><input type="radio" name="atrophy" value="yes">Present</label><label><input type="radio" name="atrophy" value="no">Absent</label></div></div>
+        <div class="field"><span class="lbl">Pelvic mass / other pathology excluded?<span class="mds">*</span> <span class="ref">1.6.1 / 1.6.3</span></span>
+          <div class="seg" data-mds-group="mass_excl"><label><input type="radio" name="mass_excl" value="yes">Yes</label><label><input type="radio" name="mass_excl" value="no">No</label></div></div>
+      </div>
+      <div class="grid two"><div class="field wide"><label class="lbl" for="exam_detail">Other examination findings</label><textarea id="exam_detail" name="exam_detail"></textarea></div></div>
+
+      <h3 class="subh">Validated questionnaires <span class="ref">1.3.12 / 1.6.4</span></h3>
+      <div class="tblwrap">
+      <table class="meds" id="qTable">
+        <thead><tr><th style="width:42%">Questionnaire</th><th style="width:22%">Score</th><th>Date</th></tr></thead>
+        <tbody>
+          <tr><td><select name="q1_name"><option value="">—</option><option>ICIQ-UI SF</option><option>ICIQ-OAB</option><option>ICIQ-FLUTS</option><option>KHQ</option><option>ICIQ-VS</option><option>PFDI-20</option><option>PFIQ-7</option><option>P-QOL</option><option>ePAQ-PF</option><option>PISQ-12 / PISQ-IR</option><option>Other</option></select></td><td><input type="text" name="q1_score"></td><td><input type="date" name="q1_date"></td></tr>
+          <tr><td><select name="q2_name"><option value="">—</option><option>ICIQ-UI SF</option><option>ICIQ-OAB</option><option>ICIQ-FLUTS</option><option>KHQ</option><option>ICIQ-VS</option><option>PFDI-20</option><option>PFIQ-7</option><option>P-QOL</option><option>ePAQ-PF</option><option>PISQ-12 / PISQ-IR</option><option>Other</option></select></td><td><input type="text" name="q2_score"></td><td><input type="date" name="q2_date"></td></tr>
+          <tr><td><select name="q3_name"><option value="">—</option><option>ICIQ-UI SF</option><option>ICIQ-OAB</option><option>ICIQ-FLUTS</option><option>KHQ</option><option>ICIQ-VS</option><option>PFDI-20</option><option>PFIQ-7</option><option>P-QOL</option><option>ePAQ-PF</option><option>PISQ-12 / PISQ-IR</option><option>Other</option></select></td><td><input type="text" name="q3_score"></td><td><input type="date" name="q3_date"></td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <!-- 5. Prolapse -->
+    <section class="card" id="s-pop" data-title="Prolapse (POP-Q)" data-show="anyPOP">
+      <h2><span class="num">5</span> Prolapse assessment</h2>
+      <p class="lead">Record all three compartments using POP-Q <span class="ref">1.6.3</span>. Values in cm relative to the hymen (negative = above). Stage is calculated.</p>
+      <div class="popq" aria-label="POP-Q grid">
+        <label class="cell"><span>Aa</span><input type="number" step="0.5" name="pq_aa" data-pq></label>
+        <label class="cell"><span>Ba</span><input type="number" step="0.5" name="pq_ba" data-pq></label>
+        <label class="cell"><span>C</span><input type="number" step="0.5" name="pq_c" data-pq></label>
+        <label class="cell"><span>gh</span><input type="number" step="0.5" min="0" name="pq_gh" data-pq></label>
+        <label class="cell"><span>pb</span><input type="number" step="0.5" min="0" name="pq_pb" data-pq></label>
+        <label class="cell"><span>tvl</span><input type="number" step="0.5" min="0" name="pq_tvl" data-pq></label>
+        <label class="cell"><span>Ap</span><input type="number" step="0.5" name="pq_ap" data-pq></label>
+        <label class="cell"><span>Bp</span><input type="number" step="0.5" name="pq_bp" data-pq></label>
+        <label class="cell"><span>D</span><input type="number" step="0.5" name="pq_d" data-pq></label>
+      </div>
+      <div class="stagebox" id="stageOut"></div>
+      <div class="grid">
+        <div class="field"><span class="lbl">Uterus<span class="mds">*</span></span>
+          <div class="seg" data-mds-group="uterus"><label><input type="radio" name="uterus" value="present">Present</label><label><input type="radio" name="uterus" value="absent">Absent (vault)</label></div></div>
+        <div class="field"><span class="lbl">Same-site recurrence after previous repair? <span class="ref">1.1.4</span></span>
+          <div class="seg"><label><input type="radio" name="pop_recur" value="yes">Yes</label><label><input type="radio" name="pop_recur" value="no">No</label></div></div>
+        <div class="field"><span class="lbl">Occult SUI on prolapse reduction</span>
+          <div class="seg"><label><input type="radio" name="occult_sui" value="yes">Yes</label><label><input type="radio" name="occult_sui" value="no">No</label><label><input type="radio" name="occult_sui" value="not tested">Not tested</label></div></div>
+      </div>
+      <div class="grid two"><div class="field wide"><label class="lbl" for="pop_sx">Prolapse symptoms (urinary, bowel, sexual) <span class="ref">1.6.1</span></label><textarea id="pop_sx" name="pop_sx" placeholder="Bulge, dragging, splinting/digitation, voiding difficulty, dyspareunia"></textarea></div></div>
+    </section>
+
+    <!-- 6. Urodynamics -->
+    <section class="card" id="s-uds" data-title="Urodynamics" data-show="anyUIorPOP">
+      <h2><span class="num">6</span> Urodynamics</h2>
+      <p class="lead">Indications are worked out from the rest of the form <span class="ref">1.3.15 / 1.3.16 / 1.4.43</span>.</p>
+      <div class="derived" id="udsDerived">Complete presenting problem and proposed treatment.</div>
+      <div class="grid">
+        <div class="field"><span class="lbl">Multichannel cystometry<span class="mds" data-show="udsNeeded">*</span></span>
+          <div class="seg"><label><input type="radio" name="uds" value="done">Done</label><label><input type="radio" name="uds" value="planned">Planned</label><label><input type="radio" name="uds" value="declined">Declined</label><label><input type="radio" name="uds" value="not done">Not done</label></div></div>
+        <div class="field" data-show="udsDone"><label class="lbl" for="uds_date">Date</label><input type="date" id="uds_date" name="uds_date"></div>
+        <div class="field" data-show="udsDone"><span class="lbl">Video-urodynamics?</span>
+          <div class="seg"><label><input type="radio" name="uds_video" value="yes">Yes</label><label><input type="radio" name="uds_video" value="no">No</label></div></div>
+      </div>
+      <div class="sub-block" data-show="udsDone">
+        <fieldset class="field" style="margin-bottom:12px"><legend class="lbl">Urodynamic findings<span class="mds">*</span></legend>
+          <div class="checks" data-mds-group="uds_find">
+            <label><input type="checkbox" name="uds_find" value="normal">Normal</label>
+            <label><input type="checkbox" name="uds_find" value="usi">Urodynamic stress incontinence</label>
+            <label><input type="checkbox" name="uds_find" value="do">Detrusor overactivity</label>
+            <label><input type="checkbox" name="uds_find" value="do_inc">DO incontinence</label>
+            <label><input type="checkbox" name="uds_find" value="voiding">Voiding dysfunction</label>
+            <label><input type="checkbox" name="uds_find" value="low_compliance">Low compliance</label>
+            <label><input type="checkbox" name="uds_find" value="hypersens">Increased bladder sensation</label>
+          </div></fieldset>
+        <div class="grid">
+          <div class="field"><label class="lbl" for="uds_fs">First desire (ml)</label><input type="number" id="uds_fs" name="uds_fs" min="0"></div>
+          <div class="field"><label class="lbl" for="uds_cap">Cystometric capacity (ml)</label><input type="number" id="uds_cap" name="uds_cap" min="0"></div>
+          <div class="field"><label class="lbl" for="uds_qmax">Qmax (ml/s)</label><input type="number" id="uds_qmax" name="uds_qmax" min="0" step="0.1"></div>
+          <div class="field"><label class="lbl" for="uds_pdet">Pdet@Qmax (cmH₂O)</label><input type="number" id="uds_pdet" name="uds_pdet"></div>
+          <div class="field"><label class="lbl" for="uds_pvr">PVR (ml)</label><input type="number" id="uds_pvr" name="uds_pvr" min="0"></div>
+        </div>
+        <div class="grid two"><div class="field wide"><label class="lbl" for="uds_summary">Urodynamic summary</label><textarea id="uds_summary" name="uds_summary"></textarea></div></div>
+      </div>
+    </section>
+
+    <!-- 7. Conservative treatment -->
+    <section class="card" id="s-cons" data-title="Non-surgical treatment" data-show="anyUIorPOP">
+      <h2><span class="num">7</span> Non-surgical treatment to date</h2>
+      <p class="lead">NG123 expects first-line treatment to be tried, or declined, before invasive options.</p>
+      <h3 class="subh">Lifestyle <span class="ref">1.4.1–1.4.3 / 1.7.2</span></h3>
+      <div class="checks" style="margin-bottom:14px">
+        <label><input type="checkbox" name="life" value="caffeine">Caffeine reduction</label>
+        <label><input type="checkbox" name="life" value="fluid">Fluid intake modified</label>
+        <label><input type="checkbox" name="life" value="weight">Weight loss advised (BMI &gt;30)</label>
+        <label><input type="checkbox" name="life" value="constipation">Constipation managed</label>
+        <label><input type="checkbox" name="life" value="lifting">Heavy lifting advice</label>
+        <label><input type="checkbox" name="life" value="smoking">Smoking cessation</label>
+      </div>
+      <h3 class="subh">Supervised pelvic floor muscle training <span class="ref">1.4.4 / 1.4.5 / 1.7.5</span></h3>
+      <div class="grid">
+        <div class="field"><span class="lbl">Supervised PFMT<span class="mds">*</span></span>
+          <div class="seg" data-mds-group="pfmt"><label><input type="radio" name="pfmt" value="completed">Completed</label><label><input type="radio" name="pfmt" value="ongoing">Ongoing</label><label><input type="radio" name="pfmt" value="declined">Declined</label><label><input type="radio" name="pfmt" value="not offered">Not offered</label></div></div>
+        <div class="field" data-show="pfmtDone"><label class="lbl" for="pfmt_weeks">Duration (weeks)<span class="mds">*</span></label><input type="number" id="pfmt_weeks" name="pfmt_weeks" min="0" data-mds><span class="hint">≥12 weeks for SUI/MUI; ≥16 weeks for POP stage 1–2</span></div>
+        <div class="field" data-show="pfmtDone"><label class="lbl" for="pfmt_by">Delivered by</label><input type="text" id="pfmt_by" name="pfmt_by" placeholder="e.g. Pelvic health physiotherapist"></div>
+        <div class="field" data-show="pfmtDone"><span class="lbl">Outcome</span>
+          <div class="seg"><label><input type="radio" name="pfmt_out" value="no benefit">No benefit</label><label><input type="radio" name="pfmt_out" value="partial">Partial</label><label><input type="radio" name="pfmt_out" value="good">Good</label></div></div>
+      </div>
+      <div data-show="anyOAB">
+        <h3 class="subh">Bladder training <span class="ref">1.4.11</span></h3>
+        <div class="grid">
+          <div class="field"><span class="lbl">Bladder training<span class="mds">*</span></span>
+            <div class="seg" data-mds-group="bt"><label><input type="radio" name="bt" value="completed">Completed</label><label><input type="radio" name="bt" value="ongoing">Ongoing</label><label><input type="radio" name="bt" value="declined">Declined</label><label><input type="radio" name="bt" value="not offered">Not offered</label></div></div>
+          <div class="field" data-show="btDone"><label class="lbl" for="bt_weeks">Duration (weeks)<span class="mds">*</span></label><input type="number" id="bt_weeks" name="bt_weeks" min="0" data-mds><span class="hint">Minimum 6 weeks</span></div>
+        </div>
+        <h3 class="subh">Medicines for OAB <span class="ref">1.4.25–1.4.42</span></h3>
+        <div class="tblwrap">
+        <table class="meds">
+          <thead><tr><th>Medicine</th><th>Class</th><th>Weeks</th><th>Outcome</th></tr></thead>
+          <tbody id="medRows"></tbody>
+        </table></div>
+        <div class="grid">
+          <div class="field"><span class="lbl">4-week review documented? <span class="ref">1.4.38</span></span>
+            <div class="seg"><label><input type="radio" name="med_review" value="yes">Yes</label><label><input type="radio" name="med_review" value="no">No</label></div></div>
+          <div class="field"><span class="lbl">Vaginal oestrogen <span class="ref">1.4.37 / 1.7.3</span></span>
+            <div class="seg"><label><input type="radio" name="vag_oest" value="yes">Used</label><label><input type="radio" name="vag_oest" value="no">Not used</label><label><input type="radio" name="vag_oest" value="ci">Contraindicated</label></div></div>
+        </div>
+      </div>
+      <div data-show="anyPOP">
+        <h3 class="subh">Prolapse non-surgical options <span class="ref">1.7.3–1.7.8</span></h3>
+        <div class="grid">
+          <div class="field"><span class="lbl">Vaginal pessary<span class="mds">*</span></span>
+            <div class="seg" data-mds-group="pessary"><label><input type="radio" name="pessary" value="current">Current use</label><label><input type="radio" name="pessary" value="failed">Tried, failed</label><label><input type="radio" name="pessary" value="declined">Declined</label><label><input type="radio" name="pessary" value="unsuitable">Unsuitable</label><label><input type="radio" name="pessary" value="not offered">Not offered</label></div></div>
+          <div class="field" data-show="pessaryUsed"><label class="lbl" for="pessary_detail">Pessary type / size / issues</label><input type="text" id="pessary_detail" name="pessary_detail"></div>
+          <div class="field" data-show="notOABvo"><span class="lbl">Vaginal oestrogen</span>
+            <div class="seg"><label><input type="radio" name="vag_oest2" value="yes">Used</label><label><input type="radio" name="vag_oest2" value="no">Not used</label><label><input type="radio" name="vag_oest2" value="ci">Contraindicated</label></div></div>
+        </div>
+      </div>
+      <div class="grid two" data-show="anySUI"><div class="field"><span class="lbl">Duloxetine <span class="ref">1.4.35</span></span>
+        <div class="seg"><label><input type="radio" name="dulox" value="tried">Tried</label><label><input type="radio" name="dulox" value="no">Not tried</label></div></div></div>
+      <div class="grid two"><div class="field wide"><label class="lbl" for="cons_notes">Notes on non-surgical treatment</label><textarea id="cons_notes" name="cons_notes"></textarea></div></div>
+    </section>
+
+    <!-- 8. Mesh complications -->
+    <section class="card" id="s-mesh" data-title="Mesh complications" data-show="meshComp">
+      <h2><span class="num">8</span> Mesh complications</h2>
+      <p class="lead">Women with mesh complications or unexplained symptoms after mesh need regional MDT review <span class="ref">1.1.4 / 1.10 / 1.11</span>.</p>
+      <div class="grid">
+        <div class="field"><span class="lbl">Mesh type<span class="mds">*</span></span>
+          <div class="checks" data-mds-group="mesh_type"><label><input type="checkbox" name="mesh_type" value="Retropubic MUS">Retropubic MUS</label><label><input type="checkbox" name="mesh_type" value="Transobturator MUS">TO MUS</label><label><input type="checkbox" name="mesh_type" value="Mini-sling">Mini-sling</label><label><input type="checkbox" name="mesh_type" value="Transvaginal prolapse mesh">Transvaginal POP mesh</label><label><input type="checkbox" name="mesh_type" value="Sacrocolpopexy/hysteropexy mesh">Sacrocolpo/hysteropexy</label></div></div>
+        <div class="field"><label class="lbl" for="mesh_date">Date implanted<span class="mds">*</span></label><input type="text" id="mesh_date" name="mesh_date" data-mds placeholder="Year or date"></div>
+        <div class="field"><label class="lbl" for="mesh_product">Product / manufacturer / unit</label><input type="text" id="mesh_product" name="mesh_product"></div>
+      </div>
+      <fieldset class="field" style="margin-bottom:12px"><legend class="lbl">Complication features<span class="mds">*</span> <span class="ref">1.10.1</span></legend>
+        <div class="checks" data-mds-group="mesh_feat">
+          <label><input type="checkbox" name="mesh_feat" value="pain">Pain (pelvic / groin / thigh)</label>
+          <label><input type="checkbox" name="mesh_feat" value="dyspareunia">Dyspareunia / partner pain</label>
+          <label><input type="checkbox" name="mesh_feat" value="exposure">Vaginal exposure / extrusion</label>
+          <label><input type="checkbox" name="mesh_feat" value="lut">Urinary tract perforation</label>
+          <label><input type="checkbox" name="mesh_feat" value="bowel">Bowel erosion / stricture / fistula</label>
+          <label><input type="checkbox" name="mesh_feat" value="infection">Infection / sinus</label>
+          <label><input type="checkbox" name="mesh_feat" value="voiding">Voiding dysfunction</label>
+          <label><input type="checkbox" name="mesh_feat" value="unexplained">Unexplained symptoms</label>
+        </div></fieldset>
+      <div class="grid">
+        <div class="field" data-show="meshExposure"><label class="lbl" for="mesh_exp_size">Exposure area (cm²) <span class="ref">1.11.3 / 1.11.5</span></label><input type="number" id="mesh_exp_size" name="mesh_exp_size" step="0.1" min="0"></div>
+        <div class="field"><span class="lbl">Complication confirmed?</span>
+          <div class="seg"><label><input type="radio" name="mesh_conf" value="confirmed">Confirmed</label><label><input type="radio" name="mesh_conf" value="suspected">Suspected</label></div></div>
+        <div class="field"><span class="lbl">Recorded in national registry? <span class="ref">1.10.6</span></span>
+          <div class="seg"><label><input type="radio" name="mesh_registry" value="yes">Yes</label><label><input type="radio" name="mesh_registry" value="no">No</label></div></div>
+        <div class="field"><span class="lbl">Reported to MHRA (Yellow Card)? <span class="ref">1.10.6</span></span>
+          <div class="seg"><label><input type="radio" name="mesh_mhra" value="yes">Yes</label><label><input type="radio" name="mesh_mhra" value="no">No</label></div></div>
+        <div class="field"><span class="lbl">Mesh removal being considered? <span class="ref">1.11.1</span></span>
+          <div class="seg"><label><input type="radio" name="mesh_removal" value="yes">Yes</label><label><input type="radio" name="mesh_removal" value="no">No</label></div></div>
+        <div class="field" data-show="meshRemoval"><span class="lbl">Limits of removal explained (1.11.2)?</span>
+          <div class="seg"><label><input type="radio" name="mesh_removal_counsel" value="yes">Yes</label><label><input type="radio" name="mesh_removal_counsel" value="no">No</label></div></div>
+      </div>
+      <div class="grid two"><div class="field wide"><label class="lbl" for="mesh_invest">Investigation plan / results (EUA, cystoscopy, imaging, etc.) <span class="ref">1.10.5</span></label><textarea id="mesh_invest" name="mesh_invest"></textarea></div></div>
+    </section>
+
+    <!-- 9. Proposed management -->
+    <section class="card" id="s-plan" data-title="Proposed management">
+      <h2><span class="num">9</span> Proposed management</h2>
+      <p class="lead">What is being put to the MDT. Select every procedure under consideration, including concurrent surgery.</p>
+      <fieldset class="field" style="margin-bottom:12px"><legend class="lbl">Procedure(s) under consideration<span class="mds">*</span></legend>
+        <div class="checks col" data-mds-group="proc" style="gap:10px">
+          <div><div class="hint" style="margin-bottom:4px">Stress urinary incontinence <span class="ref">1.5</span></div><div class="checks">
+            <label><input type="checkbox" name="proc" value="colpo">Colposuspension (open / lap)</label>
+            <label><input type="checkbox" name="proc" value="afs">Autologous rectus fascial sling</label>
+            <label><input type="checkbox" name="proc" value="rmus">Retropubic mid-urethral mesh sling</label>
+            <label><input type="checkbox" name="proc" value="tot">Transobturator mesh sling</label>
+            <label><input type="checkbox" name="proc" value="bulking">Intramural bulking agent</label></div></div>
+          <div><div class="hint" style="margin-bottom:4px">Overactive bladder <span class="ref">1.4.43–1.4.57</span></div><div class="checks">
+            <label><input type="checkbox" name="proc" value="botox">Bladder botulinum toxin A</label>
+            <label><input type="checkbox" name="proc" value="ptns">Percutaneous tibial nerve stimulation</label>
+            <label><input type="checkbox" name="proc" value="sns">Sacral nerve stimulation</label>
+            <label><input type="checkbox" name="proc" value="augment">Augmentation cystoplasty / diversion</label></div></div>
+          <div><div class="hint" style="margin-bottom:4px">Pelvic organ prolapse <span class="ref">1.8</span></div><div class="checks">
+            <label><input type="checkbox" name="proc" value="ant">Anterior repair (native tissue)</label>
+            <label><input type="checkbox" name="proc" value="post">Posterior repair (native tissue)</label>
+            <label><input type="checkbox" name="proc" value="vh">Vaginal hysterectomy ± repair</label>
+            <label><input type="checkbox" name="proc" value="manchester">Manchester repair</label>
+            <label><input type="checkbox" name="proc" value="ssf">Sacrospinous fixation / hysteropexy</label>
+            <label><input type="checkbox" name="proc" value="shp">Sacrohysteropexy (mesh)</label>
+            <label><input type="checkbox" name="proc" value="scp">Sacrocolpopexy (mesh)</label>
+            <label><input type="checkbox" name="proc" value="colpocleisis">Colpocleisis</label>
+            <label><input type="checkbox" name="proc" value="tvm">Transvaginal prolapse mesh</label></div></div>
+          <div><div class="hint" style="margin-bottom:4px">Mesh / other</div><div class="checks">
+            <label><input type="checkbox" name="proc" value="mesh_partial">Partial mesh removal</label>
+            <label><input type="checkbox" name="proc" value="mesh_total">Complete mesh removal</label>
+            <label><input type="checkbox" name="proc" value="invest">Further investigation only</label>
+            <label><input type="checkbox" name="proc" value="nonsurg">Continue non-surgical management</label>
+            <label><input type="checkbox" name="proc" value="other">Other</label></div></div>
+        </div></fieldset>
+      <div class="grid two">
+        <div class="field wide"><label class="lbl" for="plan_detail">Proposed plan &amp; rationale<span class="mds">*</span></label><textarea id="plan_detail" name="plan_detail" data-mds></textarea></div>
+        <div class="field" data-show="totSel"><label class="lbl" for="tot_reason">Why retropubic approach should be avoided<span class="mds">*</span> <span class="ref">1.5.10</span></label><textarea id="tot_reason" name="tot_reason" data-mds></textarea></div>
+        <div class="field"><span class="lbl">Is the preferred option available at the referring unit? <span class="ref">1.1.4 / 1.5.5 / 1.8.5</span></span>
+          <div class="seg"><label><input type="radio" name="avail_local" value="yes">Yes</label><label><input type="radio" name="avail_local" value="no">No</label></div></div>
+        <div class="field" data-show="anySurgPOP"><span class="lbl">Uterine preservation discussed?</span>
+          <div class="seg"><label><input type="radio" name="uterine_pres" value="yes">Yes</label><label><input type="radio" name="uterine_pres" value="no">No</label><label><input type="radio" name="uterine_pres" value="na">N/A</label></div></div>
+      </div>
+    </section>
+
+    <!-- 10. Shared decision making -->
+    <section class="card" id="s-sdm" data-title="Counselling &amp; consent" data-show="anyInvasive">
+      <h2><span class="num">10</span> Shared decision making &amp; counselling</h2>
+      <p class="lead">Use NICE patient decision aids and document what was discussed <span class="ref">1.5.1 / 1.8.2 / 1.9.2</span>.</p>
+      <fieldset class="field" style="margin-bottom:12px"><legend class="lbl">NICE patient decision aid used<span class="mds" data-show="pdaNeeded">*</span></legend>
+        <div class="checks">
+          <label data-show="suiSurg"><input type="checkbox" name="pda" value="sui">Surgery for SUI</label>
+          <label data-show="popSurgUterus"><input type="checkbox" name="pda" value="uterine">Surgery for uterine prolapse</label>
+          <label data-show="popSurgVault"><input type="checkbox" name="pda" value="vault">Surgery for vaginal vault prolapse</label>
+          <label><input type="checkbox" name="pda" value="other">Other decision aid / written information</label>
+        </div></fieldset>
+      <fieldset class="field" style="margin-bottom:12px"><legend class="lbl">Discussed with the woman</legend>
+        <div class="checks col">
+          <label><input type="checkbox" name="couns" value="all_options">All NICE-recommended options, including those not available locally, and no treatment</label>
+          <label><input type="checkbox" name="couns" value="risks">Benefits, risks and long-term uncertainties of each option</label>
+          <label data-show="meshSel"><input type="checkbox" name="couns" value="mesh_perm">Mesh is a permanent implant; complete removal may not be possible <span class="ref">1.5.7 / 1.8.6</span></label>
+          <label data-show="implantSel"><input type="checkbox" name="couns" value="implant_info">Written implant information will be given (name, manufacturer, date, surgeon) <span class="ref">1.5.4 / 1.5.8 / 1.8.6</span></label>
+          <label data-show="bulkSel"><input type="checkbox" name="couns" value="bulking">Bulking: permanent, may need repeat injections, less effective, wears off <span class="ref">1.5.3</span></label>
+          <label data-show="denovoNeeded"><input type="checkbox" name="couns" value="denovo">Risk of new incontinence after anterior/apical prolapse surgery <span class="ref">1.8.4</span></label>
+          <label data-show="concurrent"><input type="checkbox" name="couns" value="concurrent">Uncertain benefit of concurrent SUI + prolapse surgery beyond 1 year <span class="ref">1.9.2</span></label>
+          <label data-show="botoxSel"><input type="checkbox" name="couns" value="cisc">Botulinum toxin: likelihood of relief, risk of UTI, need for and ability to do CISC <span class="ref">1.4.46</span></label>
+          <label data-show="snsSel"><input type="checkbox" name="couns" value="sns">SNS: test phase, failure, long-term commitment, revision, adverse effects <span class="ref">1.4.53</span></label>
+          <label><input type="checkbox" name="couns" value="sexual">Effects on urinary, bowel and sexual function</label>
+        </div></fieldset>
+      <div class="grid">
+        <div class="field" data-show="registryNeeded"><span class="lbl">Consent for national registry entry<span class="mds">*</span> <span class="ref">1.2.1</span></span>
+          <div class="seg" data-mds-group="registry"><label><input type="radio" name="registry" value="given">Given</label><label><input type="radio" name="registry" value="declined">Declined</label><label><input type="radio" name="registry" value="to discuss">To discuss</label></div></div>
+        <div class="field wide"><label class="lbl" for="pt_pref">Woman's stated preference &amp; goals<span class="mds">*</span></label><textarea id="pt_pref" name="pt_pref" data-mds></textarea></div>
+      </div>
+    </section>
+
+    <!-- 11. MDT outcome -->
+    <section class="card" id="s-outcome" data-title="MDT outcome">
+      <h2><span class="num">11</span> MDT outcome <span class="hint" style="font-weight:400">(complete at the meeting)</span></h2>
+      <p class="lead">Record attendance so quoracy can be shown <span class="ref">1.1.2 / 1.1.3 / 1.1.5</span>.</p>
+      <fieldset class="field" style="margin-bottom:12px"><legend class="lbl">Present at discussion</legend>
+        <div class="checks">
+          <label><input type="checkbox" name="att" value="cons1">Consultant (UI/POP) 1</label>
+          <label><input type="checkbox" name="att" value="cons2">Consultant (UI/POP) 2</label>
+          <label><input type="checkbox" name="att" value="subspec">Urogynaecology subspecialist</label>
+          <label><input type="checkbox" name="att" value="urologist">Urologist (female urology)</label>
+          <label><input type="checkbox" name="att" value="nurse">Urogynae / urology / continence nurse specialist</label>
+          <label><input type="checkbox" name="att" value="physio">Pelvic floor specialist physiotherapist</label>
+          <label><input type="checkbox" name="att" value="colorectal">Colorectal surgeon</label>
+          <label><input type="checkbox" name="att" value="radiologist">Radiologist (pelvic floor imaging)</label>
+          <label><input type="checkbox" name="att" value="pain">Pain specialist</label>
+          <label><input type="checkbox" name="att" value="elderly">Care of the elderly</label>
+          <label><input type="checkbox" name="att" value="ot">Occupational therapist</label>
+          <label><input type="checkbox" name="att" value="psych">Clinical psychologist</label>
+        </div></fieldset>
+      <div class="derived" id="quorumOut">Tick attendees to check quoracy.</div>
+      <div class="grid two">
+        <div class="field wide"><label class="lbl" for="mdt_outcome">MDT recommendation</label><textarea id="mdt_outcome" name="mdt_outcome"></textarea></div>
+        <div class="field"><label class="lbl" for="mdt_actions">Actions, owner &amp; timescale</label><textarea id="mdt_actions" name="mdt_actions"></textarea></div>
+        <div class="field"><label class="lbl" for="mdt_chair">Chair / recorded by</label><input type="text" id="mdt_chair" name="mdt_chair"></div>
+        <div class="field"><span class="lbl">Onward referral to regional MDT?</span>
+          <div class="seg"><label><input type="radio" name="mdt_onward" value="yes">Yes</label><label><input type="radio" name="mdt_onward" value="no">No</label></div></div>
+      </div>
+    </section>
+    </form>
+  </main>
+
+  <aside class="panel" id="panel" aria-label="NICE NG123 compliance">
+    <div class="panel-head">
+      <h2>NG123 compliance check</h2>
+      <div class="hint" id="mdsText">Minimum data set: 0%</div>
+      <div class="meter"><i id="mdsBar"></i></div>
+      <div class="tally" id="tally"></div>
+      <div class="verdict" id="verdict"></div>
+    </div>
+    <ul class="rules" id="rules"></ul>
+  </aside>
+</div>
+
+<div class="mobile-bar"><div class="tally" id="tallyM"></div><button class="btn" type="button" id="btnPanel">Compliance</button></div>
+
+<footer>
+  Data items and checks are a suggested minimum data set drawn from NICE guideline NG123, <em>Urinary incontinence and pelvic organ prolapse in women: management</em> (April 2019, last updated 2024), recommendation numbers as published. This is a decision-support and documentation aid; it does not replace clinical judgement, local policy or the current NICE text. Check that your unit's NHS England national pelvic floor registry and mesh restrictions are followed.
+</footer>
+
+<dialog id="dlg">
+  <div class="dlg-head">
+    <h2>MDT case summary</h2>
+    <button class="btn" type="button" id="btnCopy">Copy</button>
+    <button class="btn" type="button" id="btnTxt">Download .txt</button>
+    <button class="btn primary" type="button" id="btnPrint">Print / PDF</button>
+    <button class="btn ghost" type="button" id="btnClose" aria-label="Close">✕</button>
+  </div>
+  <div class="dlg-body"><pre id="summaryOut"></pre></div>
+</dialog>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(() => {
+const form = document.getElementById('form');
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+
+/* ---------- value helpers ---------- */
+function vals(name){
+  const els = form.querySelectorAll(`[name="${name}"]`);
+  const out = [];
+  els.forEach(e => {
+    if (e.type === 'checkbox' || e.type === 'radio') { if (e.checked) out.push(e.value); }
+    else if (e.value.trim() !== '') out.push(e.value.trim());
+  });
+  return out;
+}
+const v = n => vals(n)[0] || '';
+const num = n => { const x = parseFloat(v(n)); return isNaN(x) ? null : x; };
+const has = (n, x) => vals(n).includes(x);
+const any = (n, xs) => xs.some(x => has(n, x));
+
+/* ---------- OAB medicine rows ---------- */
+const medRows = document.getElementById('medRows');
+for (let i = 1; i <= 4; i++) {
+  medRows.insertAdjacentHTML('beforeend', `<tr>
+    <td><input type="text" name="med${i}_name" placeholder="${i===1?'e.g. Solifenacin 5 mg':''}" aria-label="Medicine ${i}"></td>
+    <td><select name="med${i}_class" aria-label="Class ${i}"><option value="">—</option><option value="anticholinergic">Anticholinergic</option><option value="beta3">Beta-3 agonist</option><option value="transdermal">Transdermal</option><option value="other">Other</option></select></td>
+    <td><input type="number" name="med${i}_weeks" min="0" style="max-width:80px" aria-label="Weeks ${i}"></td>
+    <td><select name="med${i}_out" aria-label="Outcome ${i}"><option value="">—</option><option value="ineffective">Ineffective</option><option value="side effects">Not tolerated</option><option value="partial">Partial</option><option value="effective">Effective</option></select></td></tr>`);
+}
+function meds(){
+  const out = [];
+  for (let i = 1; i <= 4; i++) {
+    const name = v(`med${i}_name`), cls = v(`med${i}_class`);
+    if (name || cls) out.push({name, cls, weeks: num(`med${i}_weeks`), out: v(`med${i}_out`)});
+  }
+  return out;
+}
+
+/* ---------- POP-Q ---------- */
+function popq(){
+  const g = k => num('pq_' + k);
+  const tvl = g('tvl');
+  const stage = (pts) => {
+    const xs = pts.filter(x => x !== null);
+    if (!xs.length) return null;
+    const lead = Math.max(...xs);
+    if (tvl !== null && lead >= tvl - 2 && lead > 1) return 4;
+    if (lead > 1) return 3;
+    if (lead >= -1) return 2;
+    return 1; // stage 0 refined below
+  };
+  const res = {};
+  const ant = [g('aa'), g('ba')], post = [g('ap'), g('bp')], apex = [g('c'), g('d')];
+  res.anterior = stage(ant); res.posterior = stage(post); res.apical = stage(apex);
+  // stage 0 rules
+  const zero3 = arr => arr.every(x => x === -3);
+  if (res.anterior === 1 && zero3(ant.filter(x=>x!==null))) res.anterior = 0;
+  if (res.posterior === 1 && zero3(post.filter(x=>x!==null))) res.posterior = 0;
+  if (res.apical === 1 && tvl !== null) {
+    const c = g('c'); if (c !== null && c <= -(tvl - 2)) res.apical = 0;
+  }
+  const all = [res.anterior, res.posterior, res.apical].filter(x => x !== null);
+  res.overall = all.length ? Math.max(...all) : null;
+  return res;
+}
+const roman = s => s === null ? '—' : ['0','I','II','III','IV'][s];
+
+/* ---------- derived state ---------- */
+const SUI_PROCS = ['colpo','afs','rmus','tot','bulking'];
+const OAB_PROCS = ['botox','ptns','sns','augment'];
+const POP_PROCS = ['ant','post','vh','manchester','ssf','shp','scp','colpocleisis','tvm'];
+const MESH_PROCS = ['rmus','tot','shp','scp','tvm'];
+const MESHREM = ['mesh_partial','mesh_total'];
+
+function derive(){
+  const d = {};
+  d.pres = vals('pres');
+  d.proc = vals('proc');
+  d.prev = vals('prev');
+  d.mui = has('pres','mui');
+  d.muiPred = v('mui_pred');
+  d.anySUI = has('pres','sui') || d.mui;
+  d.anyOAB = has('pres','oab') || d.mui;
+  d.anyUI = d.anySUI || d.anyOAB;
+  d.anyPOP = has('pres','pop');
+  d.voiding = has('pres','voiding');
+  d.ruti = has('pres','ruti');
+  d.meshComp = has('pres','mesh') || any('proc', MESHREM);
+  d.suiSurg = any('proc', SUI_PROCS);
+  d.oabInv = any('proc', OAB_PROCS);
+  d.popSurg = any('proc', POP_PROCS);
+  d.meshSel = any('proc', MESH_PROCS);
+  d.bulkSel = has('proc','bulking');
+  d.totSel = has('proc','tot');
+  d.botoxSel = has('proc','botox');
+  d.snsSel = has('proc','sns');
+  d.ptnsSel = has('proc','ptns');
+  d.anyInvasive = d.suiSurg || d.oabInv || d.popSurg || any('proc', MESHREM);
+  d.pq = popq();
+  d.uterus = v('uterus');
+  const antStage = d.pq.anterior, apStage = d.pq.apical;
+  d.antApicalPOP = d.anyPOP && ((antStage||0) >= 1 || (apStage||0) >= 1);
+  d.bmi = num('pt_bmi');
+  d.prevSUI = any('prev', ['sui','sui_mesh','bulking']);
+  d.prevPOP = any('prev', ['pop_ant','pop_post','pop_apical','pop_mesh']);
+  d.udsReasons = [];
+  if (d.suiSurg) {
+    if (d.mui && (d.muiPred === 'urge' || d.muiPred === 'unclear')) d.udsReasons.push('urge-predominant or unclear mixed UI');
+    if (d.voiding) d.udsReasons.push('symptoms of voiding dysfunction');
+    if (d.antApicalPOP) d.udsReasons.push('anterior or apical prolapse');
+    if (d.prevSUI) d.udsReasons.push('previous SUI surgery');
+  }
+  if (d.botoxSel || d.snsSel || has('proc','augment')) d.udsReasons.push('OAB not responding to non-surgical treatment and invasive treatment proposed (1.4.43)');
+  d.udsNeeded = d.udsReasons.length > 0;
+  d.uds = v('uds');
+  d.udsDone = d.uds === 'done';
+  d.pureSUIClinical = d.suiSurg && !d.udsNeeded && (has('pres','sui') || d.muiPred === 'stress') && v('sui_demo') === 'yes';
+  d.fertility = v('fertility');
+  d.regionalTriggers = [];
+  if (d.suiSurg && d.prevSUI) d.regionalTriggers.push('Repeat continence surgery');
+  if (d.popSurg && v('pop_recur') === 'yes') d.regionalTriggers.push('Repeat, same-site prolapse surgery');
+  if (v('avail_local') === 'no') d.regionalTriggers.push('Preferred treatment not available at referring hospital');
+  if (v('bowel_colorectal') === 'yes') d.regionalTriggers.push('Coexisting bowel problem may need colorectal intervention');
+  if (has('proc','tvm')) d.regionalTriggers.push('Vaginal mesh for prolapse is a treatment option');
+  if (d.meshComp) d.regionalTriggers.push('Mesh complications / unexplained symptoms after mesh');
+  if (d.anyInvasive && (d.fertility === 'yes' || d.fertility === 'unsure')) d.regionalTriggers.push('Considering surgery and may wish to have children');
+  d.medList = meds();
+  d.antichol = d.medList.filter(m => m.cls === 'anticholinergic').length;
+  d.medsTried = d.medList.length;
+  d.pfmt = v('pfmt'); d.pfmtWeeks = num('pfmt_weeks');
+  d.bt = v('bt'); d.btWeeks = num('bt_weeks');
+  d.pessary = v('pessary');
+  d.redflags = vals('redflag').filter(x => x !== 'none');
+  d.att = vals('att');
+  d.concurrent = d.suiSurg && d.popSurg;
+  d.registryNeeded = d.suiSurg || d.popSurg || d.meshComp;
+  d.pdaNeeded = d.suiSurg || d.popSurg;
+  d.noUI = !d.anyUI;
+  return d;
+}
+
+/* ---------- visibility conditions ---------- */
+const SHOW = {
+  mui: d => d.mui,
+  anyBowel: d => d.pres.includes('bowel'),
+  hasRedflag: d => d.redflags.length > 0,
+  anyUI: d => d.anyUI || d.voiding || d.ruti,
+  anySUI: d => d.anySUI,
+  anyOAB: d => d.anyOAB,
+  anyPOP: d => d.anyPOP,
+  anyUIorPOP: d => d.anyUI || d.anyPOP || d.voiding || d.oabInv || d.suiSurg || d.popSurg,
+  dipAbn: () => v('dipstick') === 'abnormal',
+  pvrNeeded: d => d.voiding || d.ruti,
+  udsNeeded: d => d.udsNeeded,
+  udsDone: d => d.udsDone,
+  pfmtDone: d => d.pfmt === 'completed' || d.pfmt === 'ongoing',
+  btDone: d => d.bt === 'completed' || d.bt === 'ongoing',
+  pessaryUsed: d => d.pessary === 'current' || d.pessary === 'failed',
+  notOABvo: d => !d.anyOAB,
+  meshComp: d => d.meshComp,
+  meshExposure: () => has('mesh_feat','exposure'),
+  meshRemoval: () => v('mesh_removal') === 'yes' || any('proc', MESHREM),
+  totSel: d => d.totSel,
+  anySurgPOP: d => d.popSurg && d.uterus !== 'absent',
+  anyInvasive: d => d.anyInvasive,
+  pdaNeeded: d => d.pdaNeeded,
+  suiSurg: d => d.suiSurg,
+  popSurgUterus: d => d.popSurg && d.uterus !== 'absent',
+  popSurgVault: d => d.popSurg && d.uterus !== 'present',
+  meshSel: d => d.meshSel,
+  implantSel: d => d.meshSel || d.bulkSel,
+  bulkSel: d => d.bulkSel,
+  denovoNeeded: d => d.popSurg && d.antApicalPOP && d.noUI,
+  concurrent: d => d.concurrent,
+  botoxSel: d => d.botoxSel,
+  snsSel: d => d.snsSel,
+  registryNeeded: d => d.registryNeeded,
+};
+function isShown(el){
+  for (let n = el; n && n !== document.body; n = n.parentElement) if (n.hidden) return false;
+  return true;
+}
+
+/* ---------- NICE rules ---------- */
+// status: 'pass' | 'warn' | 'fail'; return null if not applicable
+const RULES = [
+  { g:'Referral', s:'s-referral', ref:'1.1', t:'Clear question for the MDT', f:d => v('mdt_question') ? ['pass'] : ['fail','State what the MDT is being asked to decide'] },
+  { g:'Referral', s:'s-referral', ref:'1.1.4', t:'Correct MDT level', f:d => {
+      if (!d.regionalTriggers.length) return v('mdt_type') ? ['pass'] : ['warn','Select local or regional MDT'];
+      return v('mdt_type') === 'regional' ? ['pass', 'Regional criteria: ' + d.regionalTriggers.join('; ')] : ['fail', 'Needs regional MDT review: ' + d.regionalTriggers.join('; ')];
+  }},
+  { g:'Referral', s:'s-referral', ref:'1.1.1', t:'Invasive procedure reviewed by MDT', f:d => d.anyInvasive ? ['pass','All invasive procedures for primary SUI, OAB or prolapse need local MDT review'] : null },
+  { g:'Referral', s:'s-plan', ref:'1.5.18', t:'Failed primary SUI surgery', f:d => d.prevSUI && d.anySUI ? (v('mdt_type') === 'regional' ? ['pass'] : ['fail','Seek regional MDT advice on assessment and management']) : null },
+
+  { g:'Assessment', s:'s-present', ref:'1.3.1', t:'Incontinence categorised (SUI / MUI / OAB)', f:d => d.mui ? (d.muiPred ? ['pass'] : ['fail','Record the predominant symptom']) : null },
+  { g:'Assessment', s:'s-assess', ref:'1.3.13', t:'Bladder diary ≥ 3 days', f:d => {
+      if (!d.anyUI) return null; const n = num('diary_days');
+      return n === null ? ['fail','Diary not recorded'] : n >= 3 ? ['pass', n + ' days'] : ['fail', 'Only ' + n + ' day(s); minimum is 3'];
+  }},
+  { g:'Assessment', s:'s-assess', ref:'1.3.5', t:'Urine dipstick', f:d => {
+      if (!d.anyUI) return null; const x = v('dipstick');
+      return !x || x === 'not done' ? ['fail','Dipstick all women with UI'] : x === 'abnormal' && !v('dip_detail') ? ['warn','Record result and MSU action'] : ['pass'];
+  }},
+  { g:'Assessment', s:'s-assess', ref:'1.3.10', t:'Post-void residual', f:d => (d.voiding || d.ruti) ? (num('pvr') !== null ? ['pass', num('pvr') + ' ml'] : ['fail','Measure PVR: voiding symptoms or recurrent UTI']) : null },
+  { g:'Assessment', s:'s-assess', ref:'1.3.4', t:'Digital pelvic floor assessment', f:d => (d.anyUI || d.anyPOP) ? (v('pf_assess') === 'done' ? ['pass', v('oxford') ? 'Oxford ' + v('oxford') : ''] : ['fail','Confirm PFM contraction before PFMT']) : null },
+  { g:'Assessment', s:'s-assess', ref:'1.3.12', t:'Validated UI symptom / QoL questionnaire', f:d => {
+      if (!d.anyUI) return null; const qs = ['q1_name','q2_name','q3_name'].map(v).filter(Boolean);
+      return qs.length ? ['pass', qs.join(', ')] : ['fail','Needed when evaluating therapies'];
+  }},
+  { g:'Assessment', s:'s-assess', ref:'1.6.4', t:'Validated pelvic floor questionnaire (prolapse)', f:d => {
+      if (!d.anyPOP) return null; const qs = ['q1_name','q2_name','q3_name'].map(v).filter(Boolean);
+      return qs.length ? ['pass'] : ['warn','Consider e.g. PFDI-20, P-QOL, ICIQ-VS'];
+  }},
+  { g:'Assessment', s:'s-pop', ref:'1.6.3', t:'POP-Q all three compartments', f:d => {
+      if (!d.anyPOP) return null; const p = d.pq;
+      const missing = ['anterior','apical','posterior'].filter(k => p[k] === null);
+      return missing.length ? ['fail','Missing: ' + missing.join(', ')] : ['pass','Stage ' + roman(p.overall)];
+  }},
+  { g:'Assessment', s:'s-assess', ref:'1.6.3', t:'Pelvic mass / other pathology excluded', f:d => (d.anyPOP || d.anyInvasive) ? (v('mass_excl') === 'yes' ? ['pass'] : ['fail','Document exclusion of pelvic mass']) : null },
+  { g:'Assessment', s:'s-present', ref:'1.3.21', t:'Red flags acted on', f:d => d.redflags.length ? (v('redflag_action') ? ['pass'] : ['fail','Record action (e.g. suspected cancer pathway)']) : null },
+
+  { g:'Urodynamics', s:'s-uds', ref:'1.3.16 / 1.4.43', t:'Urodynamics where indicated', f:d => {
+      if (!d.udsNeeded) return null;
+      if (d.udsDone) return ['pass'];
+      if (d.uds === 'planned') return ['warn','Planned; results needed before final decision'];
+      if (d.uds === 'declined') return ['warn','Declined; record in MDT discussion'];
+      return ['fail','Indicated: ' + d.udsReasons.join('; ')];
+  }},
+  { g:'Urodynamics', s:'s-uds', ref:'1.3.15', t:'Urodynamics avoided in clear SUI', f:d => d.pureSUIClinical ? (d.udsDone ? ['warn','Not required before primary surgery for clinically clear, demonstrated SUI'] : ['pass']) : null },
+  { g:'Urodynamics', s:'s-uds', ref:'1.4.45', t:'Botox without detrusor overactivity', f:d => d.botoxSel && d.udsDone && !has('uds_find','do') && !has('uds_find','do_inc') ? ['warn','No DO shown: MDT review required and woman does not want other invasive treatment'] : null },
+
+  { g:'Non-surgical', s:'s-cons', ref:'1.4.4', t:'Supervised PFMT ≥ 3 months before SUI surgery', f:d => {
+      if (!d.suiSurg) return null;
+      if (d.pfmt === 'declined') return ['warn','Declined: document informed choice'];
+      if (d.pfmt !== 'completed' && d.pfmt !== 'ongoing') return ['fail','First-line supervised PFMT not recorded'];
+      return d.pfmtWeeks !== null && d.pfmtWeeks >= 12 ? ['pass', d.pfmtWeeks + ' weeks'] : ['fail','Duration < 12 weeks or not recorded'];
+  }},
+  { g:'Non-surgical', s:'s-cons', ref:'1.7.5', t:'PFMT ≥ 16 weeks considered for stage I–II prolapse', f:d => {
+      if (!d.popSurg || d.pq.overall === null || d.pq.overall > 2) return null;
+      if (d.pfmt === 'declined') return ['pass','Declined'];
+      return (d.pfmt === 'completed' || d.pfmt === 'ongoing') && d.pfmtWeeks >= 16 ? ['pass'] : ['warn','Consider 16 weeks supervised PFMT first'];
+  }},
+  { g:'Non-surgical', s:'s-cons', ref:'1.4.1–1.4.3', t:'Lifestyle advice', f:d => {
+      if (!d.anyUI) return null;
+      const miss = [];
+      if (d.anyOAB && !has('life','caffeine')) miss.push('caffeine reduction');
+      if (d.bmi !== null && d.bmi > 30 && !has('life','weight')) miss.push('weight loss (BMI ' + d.bmi + ')');
+      return miss.length ? ['warn','Not recorded: ' + miss.join(', ')] : ['pass'];
+  }},
+  { g:'Non-surgical', s:'s-cons', ref:'1.7.2', t:'Prolapse lifestyle advice', f:d => {
+      if (!d.anyPOP) return null;
+      const miss = [];
+      if (d.bmi !== null && d.bmi > 30 && !has('life','weight')) miss.push('weight loss');
+      if (!has('life','constipation')) miss.push('constipation');
+      if (!has('life','lifting')) miss.push('heavy lifting');
+      return miss.length ? ['warn','Consider: ' + miss.join(', ')] : ['pass'];
+  }},
+  { g:'Non-surgical', s:'s-cons', ref:'1.4.11', t:'Bladder training ≥ 6 weeks', f:d => {
+      if (!d.oabInv) return null;
+      if (d.bt === 'declined') return ['warn','Declined'];
+      return (d.bt === 'completed' || d.bt === 'ongoing') && d.btWeeks >= 6 ? ['pass', d.btWeeks + ' weeks'] : ['fail','First-line bladder training not recorded or < 6 weeks'];
+  }},
+  { g:'Non-surgical', s:'s-cons', ref:'1.4.40 / 1.4.44', t:'OAB medicines tried before invasive treatment', f:d => {
+      if (!d.oabInv) return null;
+      if (!d.medsTried) return ['fail','No OAB medicines recorded'];
+      const failed = d.medList.filter(m => m.out === 'ineffective' || m.out === 'side effects' || m.out === 'partial').length;
+      if (!failed) return ['warn','Record outcome of each medicine'];
+      return ['pass', d.medsTried + ' medicine(s) tried'];
+  }},
+  { g:'Non-surgical', s:'s-cons', ref:'1.4.31 / 1.4.32', t:'Second agent / beta-3 agonist considered', f:d => {
+      if (!d.oabInv || !d.medsTried) return null;
+      return d.medsTried >= 2 || d.medList.some(m => m.cls === 'beta3') ? ['pass'] : ['warn','Only one medicine tried'];
+  }},
+  { g:'Non-surgical', s:'s-cons', ref:'1.4.26', t:'Anticholinergic burden considered', f:d => {
+      if (!d.antichol) return null;
+      const acb = num('pt_acb'); const cog = has('func','cognitive');
+      if (acb === null) return ['warn','Record total anticholinergic burden'];
+      return cog || acb >= 3 ? ['warn','ACB ' + acb + (cog ? ' with cognitive impairment' : '') + ': review'] : ['pass','ACB ' + acb];
+  }},
+  { g:'Non-surgical', s:'s-cons', ref:'1.3.2', t:'Stress-predominant MUI: non-surgical & OAB medicines discussed', f:d => d.mui && d.muiPred === 'stress' && d.suiSurg ? (d.medsTried ? ['pass'] : ['warn','Discuss OAB medicines before offering surgery']) : null },
+  { g:'Non-surgical', s:'s-cons', ref:'1.7.6 / 1.8.1', t:'Pessary considered before prolapse surgery', f:d => {
+      if (!d.popSurg) return null;
+      return !d.pessary || d.pessary === 'not offered' ? ['warn','Non-surgical options not documented'] : ['pass', d.pessary];
+  }},
+  { g:'Non-surgical', s:'s-cons', ref:'1.7.3', t:'Vaginal oestrogen for GSM', f:d => {
+      if (v('atrophy') !== 'yes' || v('meno') === 'Pre') return null;
+      return (v('vag_oest') === 'yes' || v('vag_oest2') === 'yes' || v('vag_oest') === 'ci' || v('vag_oest2') === 'ci') ? ['pass'] : ['warn','Atrophy noted: consider vaginal oestrogen'];
+  }},
+  { g:'Non-surgical', s:'s-plan', ref:'1.4.15', t:'PTNS criteria', f:d => d.ptnsSel ? (d.medsTried ? ['warn','Confirm woman does not want botulinum toxin or SNS'] : ['fail','OAB medicines must have failed first']) : null },
+
+  { g:'Decision & consent', s:'s-sdm', ref:'1.5.1 / 1.8.2', t:'NICE patient decision aid used', f:d => {
+      if (!d.pdaNeeded) return null; const p = vals('pda'); const miss = [];
+      if (d.suiSurg && !p.includes('sui')) miss.push('SUI');
+      if (d.popSurg && d.uterus === 'present' && !p.includes('uterine')) miss.push('uterine prolapse');
+      if (d.popSurg && d.uterus === 'absent' && !p.includes('vault')) miss.push('vault prolapse');
+      if (d.popSurg && !d.uterus && !p.includes('uterine') && !p.includes('vault')) miss.push('prolapse');
+      return miss.length ? ['fail','Use NICE decision aid: ' + miss.join(', ')] : ['pass'];
+  }},
+  { g:'Decision & consent', s:'s-sdm', ref:'1.5.1 / 1.8.2', t:'All options discussed, including those not available locally', f:d => d.anyInvasive ? (has('couns','all_options') && has('couns','risks') ? ['pass'] : ['fail','Document discussion of all options, benefits and risks']) : null },
+  { g:'Decision & consent', s:'s-sdm', ref:'1.5.7 / 1.8.6', t:'Mesh permanence explained', f:d => d.meshSel ? (has('couns','mesh_perm') ? ['pass'] : ['fail','Explain mesh is permanent and may not be fully removable']) : null },
+  { g:'Decision & consent', s:'s-sdm', ref:'1.5.4 / 1.5.8 / 1.8.6', t:'Written implant information planned', f:d => (d.meshSel || d.bulkSel) ? (has('couns','implant_info') ? ['pass'] : ['fail','Give name, manufacturer, date and surgeon details']) : null },
+  { g:'Decision & consent', s:'s-sdm', ref:'1.5.3', t:'Bulking agent counselling', f:d => d.bulkSel ? (has('couns','bulking') ? ['pass'] : ['fail','Counsel on permanence, repeat injections, lower efficacy']) : null },
+  { g:'Decision & consent', s:'s-plan', ref:'1.5.10', t:'Transobturator approach justified', f:d => d.totSel ? (v('tot_reason') ? ['pass'] : ['fail','TO slings only where retropubic route should be avoided']) : null },
+  { g:'Decision & consent', s:'s-plan', ref:'1.8.3', t:'No prophylactic continence surgery', f:d => d.popSurg && d.suiSurg && d.noUI ? ['fail','Do not offer SUI surgery to women without incontinence'] : null },
+  { g:'Decision & consent', s:'s-sdm', ref:'1.8.4', t:'Risk of new incontinence explained', f:d => d.popSurg && d.antApicalPOP && d.noUI ? (has('couns','denovo') ? ['pass'] : ['fail','Anterior/apical prolapse surgery without UI']) : null },
+  { g:'Decision & consent', s:'s-sdm', ref:'1.9.2', t:'Concurrent SUI + prolapse surgery counselling', f:d => d.concurrent && !d.noUI ? (has('couns','concurrent') ? ['pass'] : ['fail','Explain uncertain benefit beyond 1 year']) : null },
+  { g:'Decision & consent', s:'s-sdm', ref:'1.4.46', t:'Botulinum toxin & CISC counselling', f:d => d.botoxSel ? (has('couns','cisc') ? ['pass'] : ['fail','Discuss CISC and risks']) : null },
+  { g:'Decision & consent', s:'s-sdm', ref:'1.4.53', t:'SNS long-term implications', f:d => d.snsSel ? (has('couns','sns') ? ['pass'] : ['fail','Discuss test phase, revision, commitment']) : null },
+  { g:'Decision & consent', s:'s-sdm', ref:'1.2.1', t:'Registry consent requested', f:d => {
+      if (!d.registryNeeded) return null; const r = v('registry');
+      return r === 'given' || r === 'declined' ? ['pass', r] : ['fail','Ask for consent to enter data in national registry'];
+  }},
+  { g:'Decision & consent', s:'s-sdm', ref:'1.7.1', t:"Woman's preferences recorded", f:d => d.anyInvasive ? (v('pt_pref') ? ['pass'] : ['fail','Record preferences and goals']) : null },
+
+  { g:'Mesh', s:'s-mesh', ref:'1.10.6', t:'Confirmed mesh complication registered & reported', f:d => {
+      if (!d.meshComp || v('mesh_conf') !== 'confirmed') return null;
+      const miss = []; if (v('mesh_registry') !== 'yes') miss.push('national registry'); if (v('mesh_mhra') !== 'yes') miss.push('MHRA');
+      return miss.length ? ['fail','Not yet: ' + miss.join(' and ')] : ['pass'];
+  }},
+  { g:'Mesh', s:'s-mesh', ref:'1.11.1 / 1.11.2', t:'Mesh removal discussed with regional MDT', f:d => {
+      if (!(v('mesh_removal') === 'yes' || any('proc', MESHREM))) return null;
+      if (v('mdt_type') !== 'regional') return ['fail','Mesh removal must be discussed with regional MDT'];
+      return v('mesh_removal_counsel') === 'yes' ? ['pass'] : ['warn','Document counselling on limits of removal'];
+  }},
+  { g:'Mesh', s:'s-mesh', ref:'1.11.11', t:'LUT perforation → mesh complications centre', f:d => d.meshComp && has('mesh_feat','lut') ? ['warn','Refer to a centre for mesh complications'] : null },
+
+  { g:'MDT meeting', s:'s-outcome', ref:'1.1.2 / 1.1.5', t:'MDT quorate', f:d => {
+      if (!d.att.length) return null; return quorum(d).ok ? ['pass'] : ['fail', 'Missing: ' + quorum(d).missing.join(', ')];
+  }},
+];
+
+function quorum(d){
+  const a = d.att, missing = [];
+  if (v('mdt_type') === 'regional') {
+    const req = {subspec:'urogynae subspecialist', urologist:'urologist', nurse:'specialist nurse', physio:'PF physiotherapist', radiologist:'radiologist', colorectal:'colorectal surgeon', pain:'pain specialist'};
+    for (const k in req) if (!a.includes(k)) missing.push(req[k]);
+    return { ok: !missing.length, missing, note: 'Regional members attend when their expertise is needed (1.1.7)' };
+  }
+  const cons = ['cons1','cons2','subspec','urologist'].filter(k => a.includes(k)).length;
+  if (cons < 2) missing.push((2 - cons) + ' consultant(s)');
+  if (!a.includes('nurse')) missing.push('specialist nurse');
+  if (!a.includes('physio')) missing.push('PF physiotherapist');
+  return { ok: !missing.length, missing };
+}
+
+/* ---------- MDS completeness ---------- */
+function mdsStatus(){
+  let total = 0, done = 0; const missing = [];
+  $$('[data-mds]').forEach(el => {
+    if (!isShown(el)) return; total++;
+    if (el.value.trim()) done++; else missing.push(labelFor(el));
+  });
+  $$('[data-mds-group]').forEach(g => {
+    if (!isShown(g)) return; total++;
+    if (g.querySelector('input:checked')) done++; else missing.push(labelFor(g));
+  });
+  return { total, done, pct: total ? Math.round(100 * done / total) : 0, missing };
+}
+function labelFor(el){
+  const f = el.closest('.field,fieldset');
+  const l = f && f.querySelector('.lbl,legend');
+  return l ? l.childNodes[0].textContent.trim() : el.name;
+}
+
+/* ---------- render ---------- */
+let lastResults = [];
+function update(){
+  // BMI
+  const h = num('pt_height'), w = num('pt_weight'), bmiEl = form.elements.pt_bmi;
+  if (h && w && document.activeElement !== bmiEl) bmiEl.value = (w / ((h/100)**2)).toFixed(1);
+  // Age
+  const dob = v('pt_dob'); const ageOut = $('#ageOut');
+  if (dob) { const b = new Date(dob), n = new Date(); let a = n.getFullYear() - b.getFullYear(); if (n < new Date(n.getFullYear(), b.getMonth(), b.getDate())) a--; ageOut.textContent = isFinite(a) && a >= 0 ? `Age ${a}` : ''; } else ageOut.textContent = '';
+  // NHS
+  const nhsEl = form.elements.pt_nhs, raw = nhsEl.value.replace(/\s/g,'');
+  const nhsBad = raw.length > 0 && !nhsValid(raw);
+  nhsEl.classList.toggle('invalid', nhsBad); $('#nhsErr').hidden = !nhsBad;
+
+  const d = derive();
+  $$('[data-show]').forEach(el => { const fn = SHOW[el.dataset.show]; el.hidden = fn ? !fn(d) : false; });
+
+  // POP-Q out
+  const p = d.pq;
+  $('#stageOut').innerHTML = `<span class="chip">Anterior <b>${roman(p.anterior)}</b></span><span class="chip">Apical <b>${roman(p.apical)}</b></span><span class="chip">Posterior <b>${roman(p.posterior)}</b></span><span class="chip">Overall <b>Stage ${roman(p.overall)}</b></span>`;
+
+  // UDS derived
+  const ud = $('#udsDerived');
+  if (d.udsNeeded) { ud.className = 'derived ' + (d.udsDone ? 'pass' : 'fail'); ud.textContent = 'Urodynamics indicated: ' + d.udsReasons.join('; ') + '.'; }
+  else if (d.pureSUIClinical) { ud.className = 'derived pass'; ud.textContent = 'Clinically clear SUI demonstrated on examination: multichannel cystometry is not needed before primary surgery (1.3.15).'; }
+  else if (d.suiSurg) { ud.className = 'derived warn'; ud.textContent = 'No urodynamic indication found yet. If SUI was not demonstrated on examination, consider whether the diagnosis is clear.'; }
+  else { ud.className = 'derived'; ud.textContent = 'No urodynamic indication from the information so far.'; }
+
+  // Quorum
+  const q = $('#quorumOut');
+  if (d.att.length) { const r = quorum(d); q.className = 'derived ' + (r.ok ? 'pass' : 'fail'); q.textContent = r.ok ? `Quorate for ${v('mdt_type') === 'regional' ? 'regional' : 'local'} MDT.` + (r.note ? ' ' + r.note + '.' : '') : `Not quorate (${v('mdt_type') === 'regional' ? 'regional, 1.1.5' : 'local, 1.1.2'}). Missing: ${r.missing.join(', ')}.` + (r.note ? ' ' + r.note + '.' : ''); }
+  else { q.className = 'derived'; q.textContent = 'Tick attendees to check quoracy.'; }
+
+  // Rules
+  const results = [];
+  RULES.forEach(r => { const out = r.f(d); if (out) results.push({...r, st: out[0], msg: out[1] || ''}); });
+  lastResults = results;
+  const c = {pass:0, warn:0, fail:0}; results.forEach(r => c[r.st]++);
+  const mds = mdsStatus(); lastMDS = mds;
+  $('#mdsBar').style.width = mds.pct + '%';
+  $('#mdsText').textContent = `Minimum data set: ${mds.done}/${mds.total} fields (${mds.pct}%)`;
+  const tallyHTML = `<span class="t-pass">${c.pass} met</span><span class="t-warn">${c.warn} review</span><span class="t-fail">${c.fail} not met</span>`;
+  $('#tally').innerHTML = tallyHTML; $('#tallyM').innerHTML = tallyHTML + `<span style="color:var(--muted);font-weight:500">MDS ${mds.pct}%</span>`;
+  const ver = $('#verdict');
+  if (!d.pres.length) { ver.className = 'verdict derived'; ver.textContent = 'Select the presenting problem to begin.'; }
+  else if (c.fail === 0 && mds.pct === 100) { ver.className = 'verdict derived pass'; ver.textContent = 'Ready for MDT: minimum data set complete, no unmet NG123 checks.'; }
+  else if (c.fail === 0) { ver.className = 'verdict derived warn'; ver.textContent = `No unmet NG123 checks; ${mds.total - mds.done} MDS field(s) outstanding.`; }
+  else { ver.className = 'verdict derived fail'; ver.textContent = `${c.fail} NG123 check(s) not met. Resolve, or explain in the MDT question.`; }
+
+  const order = {fail:0, warn:1, pass:2};
+  const groups = [...new Set(results.map(r => r.g))];
+  const ul = $('#rules');
+  ul.innerHTML = results.length ? groups.map(g => `<li class="grp">${g}</li>` + results.filter(r => r.g === g).sort((a,b) => order[a.st] - order[b.st]).map(r =>
+    `<li class="${r.st}" data-goto="${r.s}" tabindex="0"><span class="ic">${r.st === 'pass' ? '✓' : r.st === 'warn' ? '!' : '✕'}</span><div><div>${esc(r.t)} <span class="ref">${r.ref}</span></div>${r.msg ? `<div class="msg">${esc(r.msg)}</div>` : ''}</div></li>`).join('')).join('')
+    : '<li class="grp" style="text-transform:none;letter-spacing:0">Checks appear as you describe the case.</li>';
+
+  // TOC
+  $$('section.card').forEach(sec => {
+    const a = document.querySelector(`#toc a[href="#${sec.id}"]`); if (!a) return;
+    a.classList.toggle('hidden', sec.hidden);
+    const dot = a.querySelector('.dot'); const st = sectionMDS(sec);
+    dot.className = 'dot' + (st === null ? '' : st === 1 ? ' ok' : st > 0 ? ' part' : '');
+  });
+  dirty = formHasData();
+}
+let lastMDS = null, dirty = false;
+function sectionMDS(sec){
+  let t = 0, dn = 0;
+  sec.querySelectorAll('[data-mds]').forEach(el => { if (isShown(el)) { t++; if (el.value.trim()) dn++; } });
+  sec.querySelectorAll('[data-mds-group]').forEach(g => { if (isShown(g)) { t++; if (g.querySelector('input:checked')) dn++; } });
+  return t ? dn / t : null;
+}
+function nhsValid(s){
+  if (!/^\d{10}$/.test(s)) return false;
+  let sum = 0; for (let i = 0; i < 9; i++) sum += +s[i] * (10 - i);
+  let chk = 11 - (sum % 11); if (chk === 11) chk = 0; if (chk === 10) return false;
+  return chk === +s[9];
+}
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* TOC build */
+$('#toc').innerHTML = $$('section.card').map(s => `<a href="#${s.id}"><span class="dot"></span>${s.dataset.title}</a>`).join('');
+
+/* events */
+form.addEventListener('input', update);
+form.addEventListener('change', e => {
+  // "None" in multi-select groups is exclusive
+  const t = e.target;
+  if (t.type === 'checkbox' && (t.name === 'prev' || t.name === 'redflag')) {
+    const boxes = form.querySelectorAll(`[name="${t.name}"]`);
+    if (t.value === 'none' && t.checked) boxes.forEach(b => { if (b !== t) b.checked = false; });
+    else if (t.checked) boxes.forEach(b => { if (b.value === 'none') b.checked = false; });
+  }
+  update();
+});
+$('#rules').addEventListener('click', e => { const li = e.target.closest('[data-goto]'); if (li) goTo(li.dataset.goto); });
+$('#rules').addEventListener('keydown', e => { if (e.key === 'Enter') { const li = e.target.closest('[data-goto]'); if (li) goTo(li.dataset.goto); } });
+function goTo(id){ const s = document.getElementById(id); if (s && !s.hidden) { s.scrollIntoView({block:'start'}); $('#panel').classList.remove('open'); } }
+$('#btnPanel').addEventListener('click', () => $('#panel').classList.toggle('open'));
+
+/* ---------- save / load ---------- */
+function serialize(){
+  const data = {};
+  form.querySelectorAll('[name]').forEach(el => {
+    if (el.type === 'checkbox') { (data[el.name] ||= []); if (el.checked) data[el.name].push(el.value); }
+    else if (el.type === 'radio') { if (el.checked) data[el.name] = el.value; }
+    else if (el.value !== '') data[el.name] = el.value;
+  });
+  return data;
+}
+function restore(data){
+  form.reset();
+  form.querySelectorAll('[name]').forEach(el => {
+    const x = data[el.name]; if (x === undefined) return;
+    if (el.type === 'checkbox') el.checked = Array.isArray(x) && x.includes(el.value);
+    else if (el.type === 'radio') el.checked = el.value === x;
+    else el.value = x;
+  });
+  update();
+}
+function formHasData(){ return Object.entries(serialize()).some(([k, x]) => Array.isArray(x) ? x.length : x); }
+let dlApi;
+(async () => { try { dlApi = window.claude && await window.claude.use('downloads'); } catch { dlApi = null; } })();
+async function download(name, text, type){
+  if (dlApi) {
+    try { await dlApi.save({filename: name, data: text}); toast('Saved ' + name); }
+    catch (e) { if (e && e.code !== 'declined') toast('Could not save the file here'); }
+    return;
+  }
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], {type})); a.download = name; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+}
+const fileStem = () => 'MDT_' + (v('pt_hosp') || 'case').replace(/[^\w-]/g,'') + '_' + (v('mdt_date') || new Date().toISOString().slice(0,10));
+$('#btnSave').addEventListener('click', () => { download(fileStem() + '.json', JSON.stringify({proforma:'urogynae-mdt-ng123', version:1, saved:new Date().toISOString(), data:serialize()}, null, 2), 'application/json'); if (!dlApi) toast('Draft saved to your downloads'); });
+$('#btnLoad').addEventListener('click', () => $('#fileIn').click());
+$('#fileIn').addEventListener('change', async e => {
+  const f = e.target.files[0]; if (!f) return;
+  try { const j = JSON.parse(await f.text()); restore(j.data || j); toast('Draft loaded'); } catch { toast('Could not read that file'); }
+  e.target.value = '';
+});
+$('#btnClear').addEventListener('click', () => { if (!formHasData() || confirm('Clear every field on the form?')) { form.reset(); update(); window.scrollTo(0,0); } });
+window.addEventListener('beforeunload', e => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+
+/* ---------- example (fictional) ---------- */
+$('#btnExample').addEventListener('click', () => {
+  if (formHasData() && !confirm('Replace the current form with a fictional example case?')) return;
+  const today = new Date(); today.setDate(today.getDate() + 7);
+  restore({
+    mdt_type:'local', mdt_date: today.toISOString().slice(0,10), ref_consultant:'Mr A Example', ref_by:'Dr B Trainee (ST6)', ref_site:'Example District General', priority:'Routine', disc_type:'New',
+    mdt_question:'Suitability for primary SUI surgery after failed supervised PFMT; patient leaning towards colposuspension.',
+    pt_name:'TEST, Patient', pt_nhs:'943 476 5919', pt_hosp:'X123456', pt_dob:'1974-03-12', pt_height:'165', pt_weight:'84', pt_parity:'P2 (2 SVD)', fertility:'no', meno:'Post', sex_active:'Yes', smoker:'Never',
+    pt_comorb:'Asthma (well controlled). No neurological disease.', pt_meds:'Salbutamol PRN. NKDA.', prev:['none'],
+    pres:['mui'], mui_pred:'stress', duration:'4 years', hpc:'Leaks with cough, sneeze and running; occasional urgency. 3 pads/day. Stopped running club. Goal: return to exercise.', redflag:['none'],
+    diary_days:'3', diary_freq:'7', diary_noct:'1', diary_mvv:'420', diary_intake:'1800', diary_caff:'2', diary_leaks:'3',
+    dipstick:'negative', pf_assess:'done', oxford:'2', sui_demo:'yes', atrophy:'no', mass_excl:'yes',
+    q1_name:'ICIQ-UI SF', q1_score:'14', q2_name:'KHQ',
+    life:['caffeine','fluid','weight'], pfmt:'completed', pfmt_weeks:'16', pfmt_by:'Pelvic health physiotherapist', pfmt_out:'partial',
+    bt:'completed', bt_weeks:'6', med1_name:'Solifenacin 5 mg', med1_class:'anticholinergic', med1_weeks:'8', med1_out:'partial', med_review:'yes', vag_oest:'no', dulox:'no',
+    proc:['colpo'], plan_detail:'Laparoscopic colposuspension. Discussed AFS and retropubic MUS as alternatives.', avail_local:'yes',
+    pda:['sui'], couns:['all_options','risks','sexual'], registry:'given', pt_pref:'Prefers to avoid mesh. Accepts longer recovery.'
+  });
+  toast('Fictional example loaded');
+});
+
+/* ---------- summary ---------- */
+function line(label, val){ return val ? `${label.padEnd(26)} ${val}\n` : ''; }
+function list(n, map){ return vals(n).filter(x => x !== 'none').map(x => map ? (map[x] || x) : x).join(', '); }
+const PRES = {sui:'Stress UI', oab:'Urgency UI / OAB', mui:'Mixed UI', pop:'Pelvic organ prolapse', voiding:'Voiding dysfunction', ruti:'Recurrent UTI', mesh:'Mesh complication', bowel:'Bowel symptoms', pain:'Bladder/pelvic pain', sexual:'Sexual dysfunction', fistula:'Suspected fistula'};
+const PREV = {sui:'Continence surgery', sui_mesh:'MUS (mesh)', bulking:'Bulking agent', pop_ant:'Anterior repair', pop_post:'Posterior repair', pop_apical:'Apical/vault procedure', pop_mesh:'Prolapse mesh', hyst:'Hysterectomy', botox:'Bladder botox', cancer:'Pelvic cancer surgery', rt:'Pelvic radiotherapy', colorectal:'Colorectal surgery'};
+const PROC = {colpo:'Colposuspension', afs:'Autologous fascial sling', rmus:'Retropubic MUS', tot:'Transobturator MUS', bulking:'Bulking agent', botox:'Bladder botulinum toxin A', ptns:'PTNS', sns:'Sacral nerve stimulation', augment:'Augmentation/diversion', ant:'Anterior repair', post:'Posterior repair', vh:'Vaginal hysterectomy', manchester:'Manchester repair', ssf:'Sacrospinous fixation', shp:'Sacrohysteropexy', scp:'Sacrocolpopexy', colpocleisis:'Colpocleisis', tvm:'Transvaginal mesh', mesh_partial:'Partial mesh removal', mesh_total:'Complete mesh removal', invest:'Further investigation', nonsurg:'Continue non-surgical', other:'Other'};
+const UDSF = {normal:'Normal', usi:'USI', do:'DO', do_inc:'DO incontinence', voiding:'Voiding dysfunction', low_compliance:'Low compliance', hypersens:'Increased sensation'};
+const COUNS = {all_options:'All options incl. not locally available', risks:'Benefits/risks/uncertainties', mesh_perm:'Mesh permanence', implant_info:'Written implant info', bulking:'Bulking counselling', denovo:'De novo UI risk', concurrent:'Concurrent surgery uncertainty', cisc:'Botox/CISC', sns:'SNS implications', sexual:'Urinary/bowel/sexual effects'};
+const ATT = {cons1:'Consultant 1', cons2:'Consultant 2', subspec:'Urogynae subspecialist', urologist:'Urologist', nurse:'Nurse specialist', physio:'PF physiotherapist', colorectal:'Colorectal surgeon', radiologist:'Radiologist', pain:'Pain specialist', elderly:'Care of elderly', ot:'OT', psych:'Psychologist'};
+
+function buildSummary(){
+  update();
+  const d = derive(); const p = d.pq;
+  const H = t => `\n${t.toUpperCase()}\n${'─'.repeat(t.length)}\n`;
+  let s = `UROGYNAECOLOGY MDT CASE SUBMISSION\n${'='.repeat(34)}\n`;
+  s += line('MDT', v('mdt_type') === 'regional' ? 'Regional (complex/mesh)' : v('mdt_type') === 'local' ? 'Local' : '');
+  s += line('Meeting date', v('mdt_date')) + line('Priority / type', [v('priority'), v('disc_type')].filter(Boolean).join(' / '));
+  s += line('Responsible consultant', v('ref_consultant')) + line('Submitted by', v('ref_by')) + line('Hospital', v('ref_site')) + line('Contact', v('ref_contact'));
+  s += `\nQUESTION FOR MDT: ${v('mdt_question') || '[not stated]'}\n`;
+  s += H('Patient');
+  s += line('Name', v('pt_name')) + line('NHS number', v('pt_nhs')) + line('Hospital number', v('pt_hosp'));
+  s += line('DOB', v('pt_dob') + ($('#ageOut').textContent ? ` (${$('#ageOut').textContent})` : ''));
+  s += line('BMI', d.bmi !== null ? d.bmi + ' kg/m²' : '') + line('Parity', v('pt_parity')) + line('Menopausal status', v('meno'));
+  s += line('Future childbearing', v('fertility')) + line('Sexually active', v('sex_active')) + line('Smoker', v('smoker'));
+  s += line('Function', vals('func').join(', ')) + line('Anticholinergic burden', v('pt_acb'));
+  s += line('Comorbidities', v('pt_comorb')) + line('Medication/allergies', v('pt_meds'));
+  s += line('Previous surgery', has('prev','none') ? 'None' : list('prev', PREV)) + line('Details', v('prev_detail'));
+  s += H('Presenting problem');
+  s += line('Problems', list('pres', PRES)) + line('MUI predominant', v('mui_pred')) + line('Duration', v('duration'));
+  s += line('History / QoL', v('hpc')) + line('Red flags', has('redflag','none') ? 'None' : list('redflag')) + line('Red flag action', v('redflag_action'));
+  s += H('Assessment');
+  if (d.anyUI || d.voiding || d.ruti) {
+    s += line('Bladder diary', v('diary_days') ? `${v('diary_days')} days; freq ${v('diary_freq')||'?'}, nocturia ${v('diary_noct')||'?'}, MVV ${v('diary_mvv')||'?'} ml, intake ${v('diary_intake')||'?'} ml, caffeine ${v('diary_caff')||'?'}/day, leaks ${v('diary_leaks')||'?'}/24h` : '');
+    s += line('Dipstick', [v('dipstick'), v('dip_detail')].filter(Boolean).join(' – ')) + line('PVR', v('pvr') ? `${v('pvr')} ml ${v('pvr_method') ? '(' + v('pvr_method') + ')' : ''}` : '');
+  }
+  s += line('PF assessment', [v('pf_assess'), v('oxford') ? 'Oxford ' + v('oxford') : ''].filter(Boolean).join(', '));
+  s += line('SUI demonstrated', v('sui_demo')) + line('GSM / atrophy', v('atrophy')) + line('Pelvic mass excluded', v('mass_excl')) + line('Other findings', v('exam_detail'));
+  const qs = [1,2,3].filter(i => v(`q${i}_name`)).map(i => `${v(`q${i}_name`)}${v(`q${i}_score`) ? ' = ' + v(`q${i}_score`) : ''}${v(`q${i}_date`) ? ' (' + v(`q${i}_date`) + ')' : ''}`);
+  s += line('Questionnaires', qs.join('; '));
+  if (d.anyPOP) {
+    s += H('Prolapse (POP-Q)');
+    const g = k => v('pq_' + k) || '–';
+    s += `   Aa ${g('aa').padStart(4)} | Ba ${g('ba').padStart(4)} | C  ${g('c').padStart(4)}\n   gh ${g('gh').padStart(4)} | pb ${g('pb').padStart(4)} | tvl ${g('tvl').padStart(3)}\n   Ap ${g('ap').padStart(4)} | Bp ${g('bp').padStart(4)} | D  ${g('d').padStart(4)}\n`;
+    s += line('Stage', `Anterior ${roman(p.anterior)}, Apical ${roman(p.apical)}, Posterior ${roman(p.posterior)} → Overall ${roman(p.overall)}`);
+    s += line('Uterus', v('uterus')) + line('Same-site recurrence', v('pop_recur')) + line('Occult SUI', v('occult_sui')) + line('Symptoms', v('pop_sx'));
+  }
+  if (!$('#s-uds').hidden) {
+    s += H('Urodynamics');
+    s += line('Indication', d.udsNeeded ? d.udsReasons.join('; ') : d.pureSUIClinical ? 'Not required (1.3.15)' : 'None identified');
+    s += line('Status', v('uds')) + line('Date', v('uds_date')) + line('Findings', list('uds_find', UDSF));
+    s += line('Values', [v('uds_fs') && `FDV ${v('uds_fs')}`, v('uds_cap') && `capacity ${v('uds_cap')}`, v('uds_qmax') && `Qmax ${v('uds_qmax')}`, v('uds_pdet') && `Pdet@Qmax ${v('uds_pdet')}`, v('uds_pvr') && `PVR ${v('uds_pvr')}`].filter(Boolean).join(', '));
+    s += line('Summary', v('uds_summary'));
+  }
+  if (!$('#s-cons').hidden) {
+    s += H('Non-surgical treatment');
+    s += line('Lifestyle', vals('life').join(', '));
+    s += line('Supervised PFMT', [v('pfmt'), d.pfmtWeeks !== null ? d.pfmtWeeks + ' wks' : '', v('pfmt_by'), v('pfmt_out')].filter(Boolean).join(', '));
+    if (d.anyOAB) s += line('Bladder training', [v('bt'), d.btWeeks !== null ? d.btWeeks + ' wks' : ''].filter(Boolean).join(', '));
+    d.medList.forEach((m, i) => s += line(i ? '' : 'OAB medicines', `${m.name || '?'} (${m.cls || '?'})${m.weeks ? ', ' + m.weeks + ' wks' : ''}${m.out ? ' – ' + m.out : ''}`));
+    s += line('4-week review', v('med_review')) + line('Vaginal oestrogen', v('vag_oest') || v('vag_oest2'));
+    if (d.anyPOP) s += line('Pessary', [v('pessary'), v('pessary_detail')].filter(Boolean).join(' – '));
+    s += line('Duloxetine', v('dulox')) + line('Notes', v('cons_notes'));
+  }
+  if (d.meshComp) {
+    s += H('Mesh complication');
+    s += line('Mesh', vals('mesh_type').join(', ')) + line('Implanted', v('mesh_date')) + line('Product', v('mesh_product'));
+    s += line('Features', vals('mesh_feat').join(', ')) + line('Exposure (cm²)', v('mesh_exp_size')) + line('Status', v('mesh_conf'));
+    s += line('Registry / MHRA', `${v('mesh_registry') || '?'} / ${v('mesh_mhra') || '?'}`) + line('Removal considered', v('mesh_removal')) + line('Investigations', v('mesh_invest'));
+  }
+  s += H('Proposed management');
+  s += line('Procedure(s)', list('proc', PROC)) + line('Plan & rationale', v('plan_detail')) + line('TO justification', v('tot_reason'));
+  s += line('Available locally', v('avail_local')) + line('Uterine preservation', v('uterine_pres'));
+  if (d.anyInvasive) {
+    s += line('Decision aid(s)', vals('pda').map(x => ({sui:'NICE SUI surgery', uterine:'NICE uterine prolapse', vault:'NICE vault prolapse', other:'Other'}[x])).join(', '));
+    s += line('Counselling', list('couns', COUNS)) + line('Registry consent', v('registry')) + line("Woman's preference", v('pt_pref'));
+  }
+  if (d.regionalTriggers.length) s += line('Regional MDT criteria', d.regionalTriggers.join('; '));
+  s += H('NICE NG123 compliance check');
+  const mds = lastMDS;
+  s += `Minimum data set: ${mds.done}/${mds.total} (${mds.pct}%)\n`;
+  if (mds.missing.length) s += `Outstanding MDS fields: ${mds.missing.join('; ')}\n`;
+  s += '\n';
+  const sym = {pass:'[MET]   ', warn:'[REVIEW]', fail:'[NOT MET]'};
+  lastResults.slice().sort((a,b) => ({fail:0,warn:1,pass:2})[a.st] - ({fail:0,warn:1,pass:2})[b.st]).forEach(r => s += `${sym[r.st].padEnd(9)} ${r.ref.padEnd(18)} ${r.t}${r.msg ? ' — ' + r.msg : ''}\n`);
+  if (d.att.length || v('mdt_outcome')) {
+    s += H('MDT outcome');
+    s += line('Present', d.att.map(x => ATT[x]).join(', ')) + line('Quorate', d.att.length ? (quorum(d).ok ? 'Yes' : 'No – missing ' + quorum(d).missing.join(', ')) : '');
+    s += line('Recommendation', v('mdt_outcome')) + line('Actions', v('mdt_actions')) + line('Regional referral', v('mdt_onward')) + line('Chair / recorded by', v('mdt_chair'));
+  }
+  s += `\nGenerated ${new Date().toLocaleString('en-GB')} · Pro-forma mapped to NICE NG123. Decision support only; verify against current guidance.\n`;
+  return s;
+}
+const dlg = $('#dlg');
+$('#btnSummary').addEventListener('click', () => { $('#summaryOut').textContent = buildSummary(); dlg.showModal(); });
+$('#btnClose').addEventListener('click', () => dlg.close());
+$('#btnPrint').addEventListener('click', () => window.print());
+$('#btnTxt').addEventListener('click', () => download(fileStem() + '.txt', $('#summaryOut').textContent, 'text/plain'));
+$('#btnCopy').addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText($('#summaryOut').textContent); toast('Summary copied'); }
+  catch { const r = document.createRange(); r.selectNodeContents($('#summaryOut')); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); toast('Press Ctrl/Cmd+C to copy'); }
+});
+function toast(msg){ const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 2200); }
+
+update();
+})();
+</script>
+</body>
+</html>
