@@ -10,6 +10,7 @@ Three versions:
 
 - `/` full pro-forma
 - `/medium/` standard: anonymised (no name, NHS number, hospital number or date of birth), with POP-Q staging, sexual activity and uroflowmetry
+- `/v4/` v4 draft: standard version revised after nursing feedback (assessment before diagnosis, urodynamics and voiding cystometry, cystoscopy, ICIQ scores, dated POP-Q, broader conservative treatments, separate MDT outcome note, save and reopen)
 - `/quick/` quick: shortest data set
 
 This is a documentation and decision-support aid. It does not replace clinical judgement, local policy or the current NICE guidance. The minimum data set is a suggestion, not an official dataset.
